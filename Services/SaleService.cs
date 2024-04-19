@@ -74,7 +74,7 @@ public class SaleService : ISaleService
         if (client == null)
             throw new DomainException("Não encontramos o cliente informado.");
 
-        sale.ValueSale = sale.Product.UnitaryValue * sale.ProductQuantity;
+        sale.ValueSale = product.UnitaryValue * sale.ProductQuantity;
         sale.EditedOn = DateTime.Now;
         _saleRepository.Update(sale);
     }
