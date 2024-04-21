@@ -29,9 +29,11 @@ public class ProductController : ControllerBase
             return Ok(products);
 
         }
-        catch
+        catch (Exception ex)
         {
-            return BadRequest();
+            var errors = new List<ValidationError> { new(ex.Message) };
+
+            return BadRequest(new ValidationResultModel(400, errors));
         }
     }
 
@@ -45,7 +47,9 @@ public class ProductController : ControllerBase
         }
         catch (Exception ex)
         {
-            return BadRequest(ex.Message);
+            var errors = new List<ValidationError> { new(ex.Message) };
+
+            return BadRequest(new ValidationResultModel(400, errors));
         }
     }
 
@@ -59,18 +63,15 @@ public class ProductController : ControllerBase
         }
         catch (Exception ex)
         {
-            return BadRequest(ex.Message);
+            var errors = new List<ValidationError> { new(ex.Message) };
+
+            return BadRequest(new ValidationResultModel(400, errors));
         }
     }
 
     [HttpPost]
-    public IActionResult Post(ProductPostViewModel productViewModel)
+    public IActionResult Post([FromBody] ProductPostViewModel productViewModel)
     {
-        if (!ModelState.IsValid)
-        {
-            return BadRequest(productViewModel);
-        }
-
         try
         {
             var product = _productService.Created(productViewModel);
@@ -78,16 +79,20 @@ public class ProductController : ControllerBase
         }
         catch (DomainException ex)
         {
-            return BadRequest(ex.Message);
+            var errors = new List<ValidationError> { new(ex.Message) };
+
+            return BadRequest(new ValidationResultModel(400, errors));
         }
         catch (Exception ex)
         {
-            return BadRequest(ex.Message);
+            var errors = new List<ValidationError> { new(ex.Message) };
+
+            return BadRequest(new ValidationResultModel(400, errors));
         }
     }
 
     [HttpPut]
-    public IActionResult Put(ProductPutViewModel productViewModel)
+    public IActionResult Put([FromBody] ProductPutViewModel productViewModel)
     {
         try
         {
@@ -96,15 +101,18 @@ public class ProductController : ControllerBase
         }
         catch (DomainException ex)
         {
-            return BadRequest(ex.Message);
+            var errors = new List<ValidationError> { new(ex.Message) };
+
+            return BadRequest(new ValidationResultModel(400, errors));
         }
-        catch
+        catch (Exception ex)
         {
-            return BadRequest();
+            var errors = new List<ValidationError> { new(ex.Message) };
+
+            return BadRequest(new ValidationResultModel(400, errors));
         }
 
     }
-
 
     [HttpDelete("{id:guid}")]
     public IActionResult Delete([FromRoute] Guid id)
@@ -114,9 +122,11 @@ public class ProductController : ControllerBase
             _productService.Delete(id);
             return NoContent();
         }
-        catch
+        catch (Exception ex)
         {
-            return BadRequest();
+            var errors = new List<ValidationError> { new(ex.Message) };
+
+            return BadRequest(new ValidationResultModel(400, errors));
         }
     }
 }

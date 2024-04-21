@@ -3,28 +3,24 @@
   "WorkspaceRootPath": "C:\\VSO\\GIT\\CamposDealerCrud\\ApiCamposDealerCrud\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{D412C4FC-DEAC-46BA-93BF-59A695C0F7D0}|CamposDealerCrud.csproj|c:\\vso\\git\\camposdealercrud\\apicamposdealercrud\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D412C4FC-DEAC-46BA-93BF-59A695C0F7D0}|CamposDealerCrud.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D412C4FC-DEAC-46BA-93BF-59A695C0F7D0}|CamposDealerCrud.csproj|c:\\vso\\git\\camposdealercrud\\apicamposdealercrud\\viewmodel\\saleviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D412C4FC-DEAC-46BA-93BF-59A695C0F7D0}|CamposDealerCrud.csproj|solutionrelative:viewmodel\\saleviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D412C4FC-DEAC-46BA-93BF-59A695C0F7D0}|CamposDealerCrud.csproj|c:\\vso\\git\\camposdealercrud\\apicamposdealercrud\\services\\saleservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D412C4FC-DEAC-46BA-93BF-59A695C0F7D0}|CamposDealerCrud.csproj|solutionrelative:services\\saleservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D412C4FC-DEAC-46BA-93BF-59A695C0F7D0}|CamposDealerCrud.csproj|c:\\vso\\git\\camposdealercrud\\apicamposdealercrud\\viewmodel\\clientviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D412C4FC-DEAC-46BA-93BF-59A695C0F7D0}|CamposDealerCrud.csproj|solutionrelative:viewmodel\\clientviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D412C4FC-DEAC-46BA-93BF-59A695C0F7D0}|CamposDealerCrud.csproj|c:\\vso\\git\\camposdealercrud\\apicamposdealercrud\\repository\\salerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D412C4FC-DEAC-46BA-93BF-59A695C0F7D0}|CamposDealerCrud.csproj|solutionrelative:repository\\salerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D412C4FC-DEAC-46BA-93BF-59A695C0F7D0}|CamposDealerCrud.csproj|c:\\vso\\git\\camposdealercrud\\apicamposdealercrud\\viewmodel\\productviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D412C4FC-DEAC-46BA-93BF-59A695C0F7D0}|CamposDealerCrud.csproj|solutionrelative:viewmodel\\productviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D412C4FC-DEAC-46BA-93BF-59A695C0F7D0}|CamposDealerCrud.csproj|c:\\vso\\git\\camposdealercrud\\apicamposdealercrud\\controllers\\salecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D412C4FC-DEAC-46BA-93BF-59A695C0F7D0}|CamposDealerCrud.csproj|solutionrelative:controllers\\salecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D412C4FC-DEAC-46BA-93BF-59A695C0F7D0}|CamposDealerCrud.csproj|c:\\vso\\git\\camposdealercrud\\apicamposdealercrud\\repository\\interfaces\\isalerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D412C4FC-DEAC-46BA-93BF-59A695C0F7D0}|CamposDealerCrud.csproj|solutionrelative:repository\\interfaces\\isalerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D412C4FC-DEAC-46BA-93BF-59A695C0F7D0}|CamposDealerCrud.csproj|c:\\vso\\git\\camposdealercrud\\apicamposdealercrud\\services\\interfaces\\isaleservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D412C4FC-DEAC-46BA-93BF-59A695C0F7D0}|CamposDealerCrud.csproj|solutionrelative:services\\interfaces\\isaleservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D412C4FC-DEAC-46BA-93BF-59A695C0F7D0}|CamposDealerCrud.csproj|c:\\vso\\git\\camposdealercrud\\apicamposdealercrud\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D412C4FC-DEAC-46BA-93BF-59A695C0F7D0}|CamposDealerCrud.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -34,7 +30,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Bookmark",
@@ -42,15 +38,41 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
+              "Title": "ClientViewModel.cs",
+              "DocumentMoniker": "C:\\VSO\\GIT\\CamposDealerCrud\\ApiCamposDealerCrud\\ViewModel\\ClientViewModel.cs",
+              "RelativeDocumentMoniker": "ViewModel\\ClientViewModel.cs",
+              "ToolTip": "C:\\VSO\\GIT\\CamposDealerCrud\\ApiCamposDealerCrud\\ViewModel\\ClientViewModel.cs",
+              "RelativeToolTip": "ViewModel\\ClientViewModel.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-21T02:32:20.422Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ProductViewModel.cs",
+              "DocumentMoniker": "C:\\VSO\\GIT\\CamposDealerCrud\\ApiCamposDealerCrud\\ViewModel\\ProductViewModel.cs",
+              "RelativeDocumentMoniker": "ViewModel\\ProductViewModel.cs",
+              "ToolTip": "C:\\VSO\\GIT\\CamposDealerCrud\\ApiCamposDealerCrud\\ViewModel\\ProductViewModel.cs",
+              "RelativeToolTip": "ViewModel\\ProductViewModel.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-21T02:31:47.396Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\VSO\\GIT\\CamposDealerCrud\\ApiCamposDealerCrud\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
               "ToolTip": "C:\\VSO\\GIT\\CamposDealerCrud\\ApiCamposDealerCrud\\Program.cs",
               "RelativeToolTip": "Program.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAACgAAAAjAAAA",
+              "ViewState": "AQIAAAMAAAAAAAAAAAAAACMAAAClAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-19T20:53:13.185Z",
+              "WhenOpened": "2024-04-21T02:25:57.162Z",
               "EditorCaption": ""
             },
             {
@@ -61,57 +83,23 @@
               "RelativeDocumentMoniker": "Controllers\\SaleController.cs",
               "ToolTip": "C:\\VSO\\GIT\\CamposDealerCrud\\ApiCamposDealerCrud\\Controllers\\SaleController.cs",
               "RelativeToolTip": "Controllers\\SaleController.cs",
-              "ViewState": "AQIAABMAAAAAAAAAAAAgwCkAAAAJAAAA",
+              "ViewState": "AQIAADsAAAAAAAAAAAAIwEUAAAA6AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-18T20:53:07.98Z"
+              "WhenOpened": "2024-04-21T02:25:30.22Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "SaleService.cs",
-              "DocumentMoniker": "C:\\VSO\\GIT\\CamposDealerCrud\\ApiCamposDealerCrud\\Services\\SaleService.cs",
-              "RelativeDocumentMoniker": "Services\\SaleService.cs",
-              "ToolTip": "C:\\VSO\\GIT\\CamposDealerCrud\\ApiCamposDealerCrud\\Services\\SaleService.cs",
-              "RelativeToolTip": "Services\\SaleService.cs",
-              "ViewState": "AQIAAA4AAAAAAAAAAAAQwEwAAAAaAAAA",
+              "DocumentIndex": 0,
+              "Title": "SaleViewModel.cs",
+              "DocumentMoniker": "C:\\VSO\\GIT\\CamposDealerCrud\\ApiCamposDealerCrud\\ViewModel\\SaleViewModel.cs",
+              "RelativeDocumentMoniker": "ViewModel\\SaleViewModel.cs",
+              "ToolTip": "C:\\VSO\\GIT\\CamposDealerCrud\\ApiCamposDealerCrud\\ViewModel\\SaleViewModel.cs",
+              "RelativeToolTip": "ViewModel\\SaleViewModel.cs",
+              "ViewState": "AQIAABQAAAAAAAAAAAAIwCwAAAAqAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-18T20:51:29.028Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "ISaleService.cs",
-              "DocumentMoniker": "C:\\VSO\\GIT\\CamposDealerCrud\\ApiCamposDealerCrud\\Services\\Interfaces\\ISaleService.cs",
-              "RelativeDocumentMoniker": "Services\\Interfaces\\ISaleService.cs",
-              "ToolTip": "C:\\VSO\\GIT\\CamposDealerCrud\\ApiCamposDealerCrud\\Services\\Interfaces\\ISaleService.cs",
-              "RelativeToolTip": "Services\\Interfaces\\ISaleService.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAABRAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-18T20:51:15.06Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "ISaleRepository.cs",
-              "DocumentMoniker": "C:\\VSO\\GIT\\CamposDealerCrud\\ApiCamposDealerCrud\\Repository\\Interfaces\\ISaleRepository.cs",
-              "RelativeDocumentMoniker": "Repository\\Interfaces\\ISaleRepository.cs",
-              "ToolTip": "C:\\VSO\\GIT\\CamposDealerCrud\\ApiCamposDealerCrud\\Repository\\Interfaces\\ISaleRepository.cs",
-              "RelativeToolTip": "Repository\\Interfaces\\ISaleRepository.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAABEAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-18T20:50:46.494Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "SaleRepository.cs",
-              "DocumentMoniker": "C:\\VSO\\GIT\\CamposDealerCrud\\ApiCamposDealerCrud\\Repository\\SaleRepository.cs",
-              "RelativeDocumentMoniker": "Repository\\SaleRepository.cs",
-              "ToolTip": "C:\\VSO\\GIT\\CamposDealerCrud\\ApiCamposDealerCrud\\Repository\\SaleRepository.cs",
-              "RelativeToolTip": "Repository\\SaleRepository.cs",
-              "ViewState": "AQIAABcAAAAAAAAAAAAgwCwAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-18T20:48:15.897Z"
+              "WhenOpened": "2024-04-21T02:20:17.24Z",
+              "EditorCaption": ""
             }
           ]
         }

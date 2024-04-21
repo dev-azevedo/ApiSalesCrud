@@ -36,11 +36,12 @@ public class ClientService : IClientService
         var clients = _clientRepository.FindAllByName(name);
         return _mapper.Map<List<ClientRespViewModel>>(clients);
     }
+
     public ClientRespViewModel Created(ClientPostViewModel clientViewModel)
     {
-        var clientDb = _clientRepository.FindByName(clientViewModel.Name);
-        if (clientDb != null)
-            throw new DomainException("Já existe cadastro de cliente com o nome informado.");
+        var clientExists = _clientRepository.FindByName(clientViewModel.Name);
+        if (clientExists != null && clientExists.City == clientViewModel.City)
+            throw new DomainException("Já existe cadastro de cliente com o nome e cidade informado.");
 
 
         var client = _mapper.Map<Client>(clientViewModel);
@@ -55,6 +56,10 @@ public class ClientService : IClientService
 
         if (!clientExists)
             throw new DomainException("Não encontramos o cliente informado.");
+
+        var clientExistsByName = _clientRepository.FindByName(clientViewModel.Name);
+        if (clientExistsByName != null && clientExistsByName.Id != clientViewModel.Id && clientExistsByName.City == clientViewModel.City)
+            throw new DomainException("Já existe cadastro de cliente com o nome e cidade informado.");
 
         var client = _mapper.Map<Client>(clientViewModel);
         client.EditedOn = DateTime.Now;

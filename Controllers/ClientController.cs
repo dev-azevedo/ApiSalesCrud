@@ -26,9 +26,11 @@ public class ClientController : ControllerBase
             return Ok(clients);
 
         }
-        catch
+        catch (Exception ex)
         {
-            return BadRequest();
+            var errors = new List<ValidationError> { new(ex.Message) };
+
+            return BadRequest(new ValidationResultModel(400, errors));
         }
     }
 
@@ -42,7 +44,9 @@ public class ClientController : ControllerBase
         }
         catch (Exception ex)
         {
-            return BadRequest(ex.Message);
+            var errors = new List<ValidationError> { new(ex.Message) };
+
+            return BadRequest(new ValidationResultModel(400, errors));
         }
     }
 
@@ -56,7 +60,9 @@ public class ClientController : ControllerBase
         }
         catch (Exception ex)
         {
-            return BadRequest(ex.Message);
+            var errors = new List<ValidationError> { new(ex.Message) };
+
+            return BadRequest(new ValidationResultModel(400, errors));
         }
     }
 
@@ -75,16 +81,20 @@ public class ClientController : ControllerBase
         }
         catch (DomainException ex)
         {
-            return BadRequest(ex.Message);
+            var errors = new List<ValidationError> { new(ex.Message) };
+
+            return BadRequest(new ValidationResultModel(400, errors));
         }
         catch (Exception ex)
         {
-            return BadRequest(ex.Message);
+            var errors = new List<ValidationError> { new(ex.Message) };
+
+            return BadRequest(new ValidationResultModel(400, errors));
         }
     }
 
     [HttpPut]
-    public IActionResult Put(ClientPutViewModel clientViewModel)
+    public IActionResult Put([FromBody] ClientPutViewModel clientViewModel)
     {
         try
         {
@@ -93,15 +103,18 @@ public class ClientController : ControllerBase
         }
         catch (DomainException ex)
         {
-            return BadRequest(ex.Message);
+            var errors = new List<ValidationError> { new(ex.Message) };
+
+            return BadRequest(new ValidationResultModel(400, errors));
         }
-        catch
+        catch (Exception ex)
         {
-            return BadRequest();
+            var errors = new List<ValidationError>{ new (ex.Message)};
+
+            return BadRequest(new ValidationResultModel(400, errors));
         }
 
     }
-
 
     [HttpDelete("{id:guid}")]
     public IActionResult Delete([FromRoute] Guid id)
@@ -111,9 +124,11 @@ public class ClientController : ControllerBase
             _clientService.Delete(id);
             return NoContent();
         }
-        catch
+        catch (Exception ex)
         {
-            return BadRequest();
+            var errors = new List<ValidationError> { new(ex.Message) };
+
+            return BadRequest(new ValidationResultModel(400, errors));
         }
     }
 }

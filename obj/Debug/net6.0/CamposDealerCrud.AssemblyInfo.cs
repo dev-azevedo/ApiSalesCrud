@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CamposDealerCrud")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5aca54aa4bbb91cc930f4c771486686bfc76c964")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5f191b6616cff4b002493c8578f53bd1703583ce")]
 [assembly: System.Reflection.AssemblyProductAttribute("CamposDealerCrud")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CamposDealerCrud")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

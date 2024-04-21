@@ -4,19 +4,22 @@ namespace CamposDealerCrud.ViewModel;
 
 public class ClientPostViewModel
 {
-    [Required(ErrorMessage = "O campo nome é obrigatório")]
+    [Required(ErrorMessage = "O campo nome é obrigatório.")]
     public string Name { get; set; }
-    [Required(ErrorMessage = "O campo cidade é obrigatório")]
+    [Required(ErrorMessage = "O campo cidade é obrigatório.")]
     public string City { get; set; }
 }
 
 public class ClientPutViewModel
 {
-    [Required(ErrorMessage = "O campo id do cliente é obrigatório")]
+    [Required(ErrorMessage = "O campo id do cliente é obrigatório.")]
+    [RegularExpression("^((?!00000000-0000-0000-0000-000000000000).)*$", ErrorMessage = "O campo id é obrigatório.")]
     public Guid Id { get; set; }
-    [Required(ErrorMessage = "O campo nome é obrigatório")]
+
+    [Required(ErrorMessage = "O campo nome é obrigatório.")]
     public string Name { get; set; }
-    [Required(ErrorMessage = "O campo cidade é obrigatório")]
+
+    [Required(ErrorMessage = "O campo cidade é obrigatório.")]
     public string City { get; set; }
 }
 

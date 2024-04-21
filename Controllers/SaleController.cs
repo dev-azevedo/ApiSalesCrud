@@ -26,9 +26,11 @@ public class SaleController : ControllerBase
             return Ok(sales);
 
         }
-        catch
+        catch (Exception ex)
         {
-            return BadRequest();
+            var errors = new List<ValidationError> { new(ex.Message) };
+
+            return BadRequest(new ValidationResultModel(400, errors));
         }
     }
 
@@ -42,7 +44,9 @@ public class SaleController : ControllerBase
         }
         catch (Exception ex)
         {
-            return BadRequest(ex.Message);
+            var errors = new List<ValidationError> { new(ex.Message) };
+
+            return BadRequest(new ValidationResultModel(400, errors));
         }
     }
 
@@ -56,7 +60,9 @@ public class SaleController : ControllerBase
         }
         catch (Exception ex)
         {
-            return BadRequest(ex.Message);
+            var errors = new List<ValidationError> { new(ex.Message) };
+
+            return BadRequest(new ValidationResultModel(400, errors));
         }
     }
 
@@ -65,7 +71,9 @@ public class SaleController : ControllerBase
     {
         if (!ModelState.IsValid)
         {
-            return BadRequest(saleViewModel);
+            var errors = ModelState.Keys.SelectMany(key => ModelState[key].Errors.Select(x => new ValidationError(x.ErrorMessage))).ToList();
+
+            return BadRequest(new ValidationResultModel(400, errors));
         }
         
         try
@@ -75,11 +83,15 @@ public class SaleController : ControllerBase
         }
         catch (DomainException ex)
         {
-            return BadRequest(ex.Message);
+            var errors = new List<ValidationError> { new(ex.Message) };
+
+            return BadRequest(new ValidationResultModel(400, errors));
         }
         catch (Exception ex)
         {
-            return BadRequest(ex.Message);
+            var errors = new List<ValidationError> { new(ex.Message) };
+
+            return BadRequest(new ValidationResultModel(400, errors));
         }
     }
 
@@ -93,11 +105,15 @@ public class SaleController : ControllerBase
         }
         catch (DomainException ex)
         {
-            return BadRequest(ex.Message);
+            var errors = new List<ValidationError> { new(ex.Message) };
+
+            return BadRequest(new ValidationResultModel(400, errors));
         }
-        catch
+        catch (Exception ex)
         {
-            return BadRequest();
+            var errors = new List<ValidationError> { new(ex.Message) };
+
+            return BadRequest(new ValidationResultModel(400, errors));
         }
 
     }
@@ -111,9 +127,11 @@ public class SaleController : ControllerBase
             _saleService.Delete(id);
             return NoContent();
         }
-        catch
+        catch (Exception ex)
         {
-            return BadRequest();
+            var errors = new List<ValidationError> { new(ex.Message) };
+
+            return BadRequest(new ValidationResultModel(400, errors));
         }
     }
 }

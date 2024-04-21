@@ -1,9 +1,11 @@
 using CamposDealerCrud.AutoMapper;
+using CamposDealerCrud.Exceptions;
 using CamposDealerCrud.Infra;
 using CamposDealerCrud.Repository;
 using CamposDealerCrud.Repository.Interfaces;
 using CamposDealerCrud.Services;
 using CamposDealerCrud.Services.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -26,6 +28,20 @@ builder.Services.AddScoped<ISaleService, SaleService>();
 
 builder.Services.AddAutoMapper(typeof(AutoMapperConfig));
 
+// Configurações do ServiceCollection devem ser feitas antes de builder.Build()
+builder.Services.PostConfigure<ApiBehaviorOptions>(options =>
+{
+    options.InvalidModelStateResponseFactory = actionContext =>
+    {
+        var errors = actionContext.ModelState.Keys.SelectMany(key => actionContext.ModelState[key].Errors.Select(x => new ValidationError(x.ErrorMessage))).ToList();
+    
+        var model = new ValidationResultModel(400, errors);
+        return new BadRequestObjectResult(model);
+    };
+});
+
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -34,6 +50,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
 
 app.UseCors(x => x
                 .AllowAnyOrigin()

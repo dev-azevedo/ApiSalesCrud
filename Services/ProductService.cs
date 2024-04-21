@@ -36,6 +36,7 @@ public class ProductService : IProductService
         var clients = _productRepository.FindAllByDescription(description);
         return _mapper.Map<List<ProductRespViewModel>>(clients);
     }
+    
     public ProductRespViewModel Created(ProductPostViewModel productViewModel)
     {
         var productExists = _productRepository.FindByDescription(productViewModel.Description);
@@ -55,6 +56,11 @@ public class ProductService : IProductService
 
         if (!productExists)
             throw new DomainException("Não encontramos o produto informado.");
+
+        var productExistsByDescription = _productRepository.FindByDescription(productViewModel.Description);
+        if (productExistsByDescription != null && productExistsByDescription.Id != productViewModel.Id)
+            throw new DomainException("Já existe cadastro de produto com a descrição informada.");
+
 
         var product = _mapper.Map<Product>(productViewModel);
         product.EditedOn = DateTime.Now;
