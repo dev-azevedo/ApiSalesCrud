@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace CamposDealerCrud.Migrations
+namespace SalesCrud.Migrations
 {
     public partial class TablesToProject : Migration
     {

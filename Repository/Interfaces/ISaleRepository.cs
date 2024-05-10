@@ -1,6 +1,6 @@
-﻿using CamposDealerCrud.Model;
+﻿using SalesCrud.Model;
 
-namespace CamposDealerCrud.Repository.Interfaces;
+namespace SalesCrud.Repository.Interfaces;
 
 public interface ISaleRepository
 {

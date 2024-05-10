@@ -18,11 +18,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EditorConfigFiles Remove="C:\VSO\GIT\CamposDealerCrud\CamposDealerCrud\.editorconfig" />
+    <EditorConfigFiles Remove="C:\VSO\GIT\SalesCrud\SalesCrud\.editorconfig" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="C:\VSO\GIT\CamposDealerCrud\CamposDealerCrud\.editorconfig" />
+    <None Include="C:\VSO\GIT\SalesCrud\SalesCrud\.editorconfig" />
   </ItemGroup>
 
 </Project>

@@ -1,8 +1,8 @@
-﻿using CamposDealerCrud.Infra;
-using CamposDealerCrud.Model;
-using CamposDealerCrud.Repository.Interfaces;
+﻿using SalesCrud.Infra;
+using SalesCrud.Model;
+using SalesCrud.Repository.Interfaces;
 
-namespace CamposDealerCrud.Repository;
+namespace SalesCrud.Repository;
 
 public class ClientRepository : IClientRepository
 {

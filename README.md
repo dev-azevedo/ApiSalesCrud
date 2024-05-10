@@ -19,13 +19,13 @@ The main frameworks/libraries used in the project
 To clone and run this application, you'll need Git and Node.js (which comes with npm) installed on your computer. From your command line:
 
 ```bash
-  git clone https://github.com/dev-azevedo/ApiCamposDealerCrud.git
+  git clone https://github.com/dev-azevedo/ApiSalesCrud.git
 ```
 
 Go to the project directory
 
 ```bash
-  cd ApiCamposDealerCrud
+  cd ApiSalesCrud
 ```
 
 Update database in Package Manager Console
@@ -38,7 +38,7 @@ PM> update-database
 
 **API:** .Net 6, EntityFrameworkCore, SqlServer, AutoMapper;
 
-[**Client:**](https://github.com/dev-azevedo/FrontCamposDealerCrud) Vue Js 3, Vue-router 4, Axios, SweetAlert2;
+[**Client:**](https://github.com/dev-azevedo/FrontSalesCrud) Vue Js 3, Vue-router 4, Axios, SweetAlert2;
 
 
 ## 🤘🏼 Authors

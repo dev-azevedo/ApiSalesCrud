@@ -1,4 +1,4 @@
-﻿namespace CamposDealerCrud.Model;
+﻿namespace SalesCrud.Model;
 
 public class BaseModel
 {

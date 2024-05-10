@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace CamposDealerCrud.Exceptions;
+namespace SalesCrud.Exceptions;
 [Serializable]
 internal class DomainException : Exception
 {

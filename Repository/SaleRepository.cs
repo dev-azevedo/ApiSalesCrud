@@ -1,10 +1,10 @@
-﻿using CamposDealerCrud.Infra;
-using CamposDealerCrud.Model;
-using CamposDealerCrud.Repository.Interfaces;
+﻿using SalesCrud.Infra;
+using SalesCrud.Model;
+using SalesCrud.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Xml.Linq;
 
-namespace CamposDealerCrud.Repository;
+namespace SalesCrud.Repository;
 
 public class SaleRepository : ISaleRepository
 {

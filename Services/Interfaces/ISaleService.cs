@@ -1,7 +1,7 @@
-﻿using CamposDealerCrud.Model;
-using CamposDealerCrud.ViewModel;
+﻿using SalesCrud.Model;
+using SalesCrud.ViewModel;
 
-namespace CamposDealerCrud.Services.Interfaces;
+namespace SalesCrud.Services.Interfaces;
 
 public interface ISaleService
 {

@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
-using CamposDealerCrud.Exceptions;
-using CamposDealerCrud.Model;
-using CamposDealerCrud.Repository;
-using CamposDealerCrud.Repository.Interfaces;
-using CamposDealerCrud.Services.Interfaces;
-using CamposDealerCrud.ViewModel;
+using SalesCrud.Exceptions;
+using SalesCrud.Model;
+using SalesCrud.Repository;
+using SalesCrud.Repository.Interfaces;
+using SalesCrud.Services.Interfaces;
+using SalesCrud.ViewModel;
 
-namespace CamposDealerCrud.Services;
+namespace SalesCrud.Services;
 
 public class ProductService : IProductService
 {

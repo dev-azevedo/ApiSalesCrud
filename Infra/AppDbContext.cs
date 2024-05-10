@@ -1,7 +1,7 @@
-﻿using CamposDealerCrud.Model;
+﻿using SalesCrud.Model;
 using Microsoft.EntityFrameworkCore;
 
-namespace CamposDealerCrud.Infra;
+namespace SalesCrud.Infra;
 
 public class AppDbContext : DbContext
 {

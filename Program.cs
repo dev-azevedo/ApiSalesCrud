@@ -1,16 +1,16 @@
-using CamposDealerCrud.AutoMapper;
-using CamposDealerCrud.Exceptions;
-using CamposDealerCrud.Infra;
-using CamposDealerCrud.Repository;
-using CamposDealerCrud.Repository.Interfaces;
-using CamposDealerCrud.Services;
-using CamposDealerCrud.Services.Interfaces;
+using SalesCrud.AutoMapper;
+using SalesCrud.Exceptions;
+using SalesCrud.Infra;
+using SalesCrud.Repository;
+using SalesCrud.Repository.Interfaces;
+using SalesCrud.Services;
+using SalesCrud.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(builder.Configuration["ConnectionStrings:CamposDealerCrud"]));
+builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(builder.Configuration["ConnectionStrings:SalesCrud"]));
 // Add services to the container.
 
 builder.Services.AddControllers();

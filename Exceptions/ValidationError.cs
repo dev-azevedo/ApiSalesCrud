@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace CamposDealerCrud.Exceptions;
+namespace SalesCrud.Exceptions;
 
 public class ValidationError
 {

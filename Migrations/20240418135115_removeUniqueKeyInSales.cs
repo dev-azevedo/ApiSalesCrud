@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace CamposDealerCrud.Migrations
+namespace SalesCrud.Migrations
 {
     public partial class removeUniqueKeyInSales : Migration
     {

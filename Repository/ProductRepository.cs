@@ -1,9 +1,9 @@
-﻿using CamposDealerCrud.Infra;
-using CamposDealerCrud.Model;
-using CamposDealerCrud.Repository.Interfaces;
+﻿using SalesCrud.Infra;
+using SalesCrud.Model;
+using SalesCrud.Repository.Interfaces;
 using System.Xml.Linq;
 
-namespace CamposDealerCrud.Repository;
+namespace SalesCrud.Repository;
 
 public class ProductRepository : IProductRepository
 {

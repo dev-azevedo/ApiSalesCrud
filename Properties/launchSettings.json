@@ -9,7 +9,7 @@
     }
   },
   "profiles": {
-    "CamposDealerCrud": {
+    "SalesCrud": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,

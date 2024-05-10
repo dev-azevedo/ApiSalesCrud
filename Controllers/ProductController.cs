@@ -1,13 +1,13 @@
-﻿using CamposDealerCrud.Exceptions;
-using CamposDealerCrud.Model;
-using CamposDealerCrud.Services;
-using CamposDealerCrud.Services.Interfaces;
-using CamposDealerCrud.ViewModel;
+﻿using SalesCrud.Exceptions;
+using SalesCrud.Model;
+using SalesCrud.Services;
+using SalesCrud.Services.Interfaces;
+using SalesCrud.ViewModel;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
-namespace CamposDealerCrud.Controllers;
+namespace SalesCrud.Controllers;
 [Route("api/[controller]")]
 [ApiController]
 public class ProductController : ControllerBase

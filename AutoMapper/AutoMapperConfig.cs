@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using CamposDealerCrud.Model;
-using CamposDealerCrud.ViewModel;
+using SalesCrud.Model;
+using SalesCrud.ViewModel;
 
-namespace CamposDealerCrud.AutoMapper;
+namespace SalesCrud.AutoMapper;
 
 public class AutoMapperConfig : Profile
 {
