@@ -1,5 +1,4 @@
-﻿using SalesCrud.Model;
-using SalesCrud.ViewModel;
+﻿using SalesCrud.ViewModel;
 
 namespace SalesCrud.Services.Interfaces;
 

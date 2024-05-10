@@ -1,11 +1,7 @@
 ﻿using SalesCrud.Exceptions;
-using SalesCrud.Model;
-using SalesCrud.Services;
 using SalesCrud.Services.Interfaces;
 using SalesCrud.ViewModel;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Net;
 
 namespace SalesCrud.Controllers;
 [Route("api/[controller]")]

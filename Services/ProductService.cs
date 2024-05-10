@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using SalesCrud.Exceptions;
 using SalesCrud.Model;
-using SalesCrud.Repository;
 using SalesCrud.Repository.Interfaces;
 using SalesCrud.Services.Interfaces;
 using SalesCrud.ViewModel;

@@ -1,8 +1,6 @@
 ﻿using SalesCrud.Exceptions;
-using SalesCrud.Services;
 using SalesCrud.Services.Interfaces;
 using SalesCrud.ViewModel;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace SalesCrud.Controllers;
