@@ -2,13 +2,7 @@
 
 namespace SalesCrud.Repository.Interfaces;
 
-public interface ISaleRepository
+public interface ISaleRepository : IGenericRepository<Sale>
 {
-    List<Sale> FindAll();
-    Sale FindById(Guid id);
     List<Sale> FindAllByNameOrDescription(string nameOrDescription);
-    void Created(Sale sale);
-    void Update(Sale sale);
-    void Delete(Guid id);
-    bool Exists(Guid id);
 }
