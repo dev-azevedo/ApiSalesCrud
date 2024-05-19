@@ -4,7 +4,7 @@ namespace SalesCrud.Services.Interfaces;
 
 public interface IClientService
 {
-    List<ClientRespViewModel> FindAll();
+    Task<(List<ClientRespViewModel>, int)> FindAll(int pageNumber, int pageSize);
     ClientRespViewModel FindById(Guid id);
     List<ClientRespViewModel> FindAllByName(string name);
     ClientRespViewModel Created(ClientPostViewModel clientViewModel);

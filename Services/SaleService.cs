@@ -22,10 +22,10 @@ public class SaleService : ISaleService
         _mapper = mapper;
     }
 
-    public List<SaleRespViewModel> FindAll()
+    public async Task<(List<SaleRespViewModel>, int)> FindAll(int pageNumber, int pageSize)
     {
-        var sales = _saleRepository.FindAll();
-        return _mapper.Map<List<SaleRespViewModel>>(sales);
+        var (sales, totalItems) = await _saleRepository.FindAll(pageNumber, pageSize);
+        return (_mapper.Map<List<SaleRespViewModel>>(sales), totalItems);
     }
 
     public SaleRespViewModel FindById(Guid id)

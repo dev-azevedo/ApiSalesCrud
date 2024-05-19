@@ -2,6 +2,7 @@
 using SalesCrud.Services.Interfaces;
 using SalesCrud.ViewModel;
 using Microsoft.AspNetCore.Mvc;
+using SalesCrud.Model;
 
 namespace SalesCrud.Controllers;
 [Route("api/[controller]")]
@@ -16,12 +17,21 @@ public class ClientController : ControllerBase
     }
 
     [HttpGet]
-    public IActionResult Get()
+    public async Task<IActionResult> Get([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
     {
         try
         {
-            var clients = _clientService.FindAll();
-            return Ok(clients);
+            var (clients, totalItems) = await _clientService.FindAll(pageNumber, pageSize);
+            var response = new
+            {
+                PageNumber = pageNumber,
+                PageSize = pageSize,
+                TotalItems = totalItems,
+                TotalPages = (int)Math.Ceiling(totalItems/ (double)pageSize),
+                Items = clients
+            };
+
+            return Ok(response);
 
         }
         catch (Exception ex)

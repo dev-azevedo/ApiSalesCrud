@@ -18,10 +18,10 @@ public class ClientService : IClientService
         _mapper = mapper;
     }
 
-    public List<ClientRespViewModel> FindAll()
+    public async Task<(List<ClientRespViewModel>, int)> FindAll(int pageNumber, int pageSize)
     {
-        var clients = _clientRepository.FindAll();
-        return _mapper.Map<List<ClientRespViewModel>>(clients);
+        var (clients, totalItems) = await _clientRepository.FindAll(pageNumber, pageSize);
+        return (_mapper.Map<List<ClientRespViewModel>>(clients), totalItems);
     }
 
     public ClientRespViewModel FindById(Guid id)

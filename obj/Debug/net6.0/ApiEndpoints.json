@@ -1,16 +1,27 @@
 [
   {
-    "ContainingType": "CamposDealerCrud.Controllers.ClientController",
+    "ContainingType": "SalesCrud.Controllers.ClientController",
     "Method": "Get",
     "RelativePath": "api/Client",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
-    "Parameters": [],
+    "Parameters": [
+      {
+        "Name": "pageNumber",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "pageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
     "ReturnTypes": []
   },
   {
-    "ContainingType": "CamposDealerCrud.Controllers.ClientController",
+    "ContainingType": "SalesCrud.Controllers.ClientController",
     "Method": "Post",
     "RelativePath": "api/Client",
     "HttpMethod": "POST",
@@ -19,14 +30,14 @@
     "Parameters": [
       {
         "Name": "clientViewModel",
-        "Type": "CamposDealerCrud.ViewModel.ClientPostViewModel",
+        "Type": "SalesCrud.ViewModel.ClientPostViewModel",
         "IsRequired": true
       }
     ],
     "ReturnTypes": []
   },
   {
-    "ContainingType": "CamposDealerCrud.Controllers.ClientController",
+    "ContainingType": "SalesCrud.Controllers.ClientController",
     "Method": "Put",
     "RelativePath": "api/Client",
     "HttpMethod": "PUT",
@@ -35,14 +46,14 @@
     "Parameters": [
       {
         "Name": "clientViewModel",
-        "Type": "CamposDealerCrud.ViewModel.ClientPutViewModel",
+        "Type": "SalesCrud.ViewModel.ClientPutViewModel",
         "IsRequired": true
       }
     ],
     "ReturnTypes": []
   },
   {
-    "ContainingType": "CamposDealerCrud.Controllers.ClientController",
+    "ContainingType": "SalesCrud.Controllers.ClientController",
     "Method": "Get",
     "RelativePath": "api/Client/{id}",
     "HttpMethod": "GET",
@@ -58,7 +69,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "CamposDealerCrud.Controllers.ClientController",
+    "ContainingType": "SalesCrud.Controllers.ClientController",
     "Method": "Delete",
     "RelativePath": "api/Client/{id}",
     "HttpMethod": "DELETE",
@@ -74,7 +85,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "CamposDealerCrud.Controllers.ClientController",
+    "ContainingType": "SalesCrud.Controllers.ClientController",
     "Method": "Get",
     "RelativePath": "api/Client/{name}",
     "HttpMethod": "GET",
@@ -90,17 +101,28 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "CamposDealerCrud.Controllers.ProductController",
+    "ContainingType": "SalesCrud.Controllers.ProductController",
     "Method": "Get",
     "RelativePath": "api/Product",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
-    "Parameters": [],
+    "Parameters": [
+      {
+        "Name": "pageNumber",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "pageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
     "ReturnTypes": []
   },
   {
-    "ContainingType": "CamposDealerCrud.Controllers.ProductController",
+    "ContainingType": "SalesCrud.Controllers.ProductController",
     "Method": "Post",
     "RelativePath": "api/Product",
     "HttpMethod": "POST",
@@ -109,14 +131,14 @@
     "Parameters": [
       {
         "Name": "productViewModel",
-        "Type": "CamposDealerCrud.ViewModel.ProductPostViewModel",
+        "Type": "SalesCrud.ViewModel.ProductPostViewModel",
         "IsRequired": true
       }
     ],
     "ReturnTypes": []
   },
   {
-    "ContainingType": "CamposDealerCrud.Controllers.ProductController",
+    "ContainingType": "SalesCrud.Controllers.ProductController",
     "Method": "Put",
     "RelativePath": "api/Product",
     "HttpMethod": "PUT",
@@ -125,14 +147,14 @@
     "Parameters": [
       {
         "Name": "productViewModel",
-        "Type": "CamposDealerCrud.ViewModel.ProductPutViewModel",
+        "Type": "SalesCrud.ViewModel.ProductPutViewModel",
         "IsRequired": true
       }
     ],
     "ReturnTypes": []
   },
   {
-    "ContainingType": "CamposDealerCrud.Controllers.ProductController",
+    "ContainingType": "SalesCrud.Controllers.ProductController",
     "Method": "Get",
     "RelativePath": "api/Product/{description}",
     "HttpMethod": "GET",
@@ -148,7 +170,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "CamposDealerCrud.Controllers.ProductController",
+    "ContainingType": "SalesCrud.Controllers.ProductController",
     "Method": "Get",
     "RelativePath": "api/Product/{id}",
     "HttpMethod": "GET",
@@ -164,7 +186,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "CamposDealerCrud.Controllers.ProductController",
+    "ContainingType": "SalesCrud.Controllers.ProductController",
     "Method": "Delete",
     "RelativePath": "api/Product/{id}",
     "HttpMethod": "DELETE",
@@ -180,17 +202,28 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "CamposDealerCrud.Controllers.SaleController",
+    "ContainingType": "SalesCrud.Controllers.SaleController",
     "Method": "Get",
     "RelativePath": "api/Sale",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
-    "Parameters": [],
+    "Parameters": [
+      {
+        "Name": "pageNumber",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "pageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
     "ReturnTypes": []
   },
   {
-    "ContainingType": "CamposDealerCrud.Controllers.SaleController",
+    "ContainingType": "SalesCrud.Controllers.SaleController",
     "Method": "Post",
     "RelativePath": "api/Sale",
     "HttpMethod": "POST",
@@ -199,14 +232,14 @@
     "Parameters": [
       {
         "Name": "saleViewModel",
-        "Type": "CamposDealerCrud.ViewModel.SalePostViewModel",
+        "Type": "SalesCrud.ViewModel.SalePostViewModel",
         "IsRequired": true
       }
     ],
     "ReturnTypes": []
   },
   {
-    "ContainingType": "CamposDealerCrud.Controllers.SaleController",
+    "ContainingType": "SalesCrud.Controllers.SaleController",
     "Method": "Put",
     "RelativePath": "api/Sale",
     "HttpMethod": "PUT",
@@ -215,14 +248,14 @@
     "Parameters": [
       {
         "Name": "saleViewModel",
-        "Type": "CamposDealerCrud.ViewModel.SalePutViewModel",
+        "Type": "SalesCrud.ViewModel.SalePutViewModel",
         "IsRequired": true
       }
     ],
     "ReturnTypes": []
   },
   {
-    "ContainingType": "CamposDealerCrud.Controllers.SaleController",
+    "ContainingType": "SalesCrud.Controllers.SaleController",
     "Method": "Get",
     "RelativePath": "api/Sale/{id}",
     "HttpMethod": "GET",
@@ -238,7 +271,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "CamposDealerCrud.Controllers.SaleController",
+    "ContainingType": "SalesCrud.Controllers.SaleController",
     "Method": "Delete",
     "RelativePath": "api/Sale/{id}",
     "HttpMethod": "DELETE",
@@ -254,7 +287,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "CamposDealerCrud.Controllers.SaleController",
+    "ContainingType": "SalesCrud.Controllers.SaleController",
     "Method": "Get",
     "RelativePath": "api/Sale/{nameOrDescription}",
     "HttpMethod": "GET",

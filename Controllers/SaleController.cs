@@ -2,6 +2,7 @@
 using SalesCrud.Services.Interfaces;
 using SalesCrud.ViewModel;
 using Microsoft.AspNetCore.Mvc;
+using SalesCrud.Model;
 
 namespace SalesCrud.Controllers;
 [Route("api/[controller]")]
@@ -16,12 +17,21 @@ public class SaleController : ControllerBase
     }
 
     [HttpGet]
-    public IActionResult Get()
+    public async Task<IActionResult> Get([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
     {
         try
         {
-            var sales = _saleService.FindAll();
-            return Ok(sales);
+            var (sales, totalItems) = await _saleService.FindAll(pageNumber, pageSize);
+            var response = new
+            {
+                PageNumber = pageNumber,
+                pageSize = pageSize,
+                TotalItems = totalItems,
+                TotalPages = (int)Math.Ceiling(totalItems / (double)pageSize),
+                Items = sales
+            };
+
+            return Ok(response);
 
         }
         catch (Exception ex)

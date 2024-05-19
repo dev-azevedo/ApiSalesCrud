@@ -18,10 +18,11 @@ public class ProductService : IProductService
         _mapper = mapper;
     }
 
-    public List<ProductRespViewModel> FindAll()
+    public async Task<(List<ProductRespViewModel>, int)> FindAll(int pageNumber, int pageSize)
     {
-        var clients = _productRepository.FindAll();
-        return _mapper.Map<List<ProductRespViewModel>>(clients);
+        var (products, totalItems) = await _productRepository.FindAll(pageNumber, pageSize);
+
+        return (_mapper.Map<List<ProductRespViewModel>>(products), totalItems);
     }
 
     public ProductRespViewModel FindById(Guid id)

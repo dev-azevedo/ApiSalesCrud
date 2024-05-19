@@ -12,13 +12,18 @@ public class SaleRepository : GenericRepository<Sale>, ISaleRepository
     public SaleRepository(AppDbContext context) : base(context)
     { }
 
-    public override List<Sale> FindAll()
+    public override async Task<(List<Sale>, int)> FindAll(int pageNumber, int pageSize)
     {
-        return dataset
-                   .Include(s => s.Product)
-                   .Include(s => s.Client)
-                   .AsNoTracking()
-                   .ToList();
+        var totalItems = await dataset.CountAsync();
+        var sales = await dataset
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
+            .Include(s => s.Product)
+            .Include(s => s.Client)
+            .AsNoTracking()
+            .ToListAsync();
+
+        return (sales, totalItems);
     }
 
     public override Sale FindById(Guid id)

@@ -4,7 +4,7 @@ namespace SalesCrud.Services.Interfaces;
 
 public interface ISaleService
 {
-    List<SaleRespViewModel> FindAll();
+    Task<(List<SaleRespViewModel>, int)> FindAll(int pageNumber, int pageSize);
     SaleRespViewModel FindById(Guid id);
     List<SaleRespViewModel> FindAllByNameOrDescription(string nameOrDescription);
     SaleRespViewModel Created(SalePostViewModel saleViewModel);

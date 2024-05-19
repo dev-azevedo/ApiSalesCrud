@@ -17,12 +17,21 @@ public class ProductController : ControllerBase
     }
 
     [HttpGet]
-    public IActionResult Get()
+    public async Task<IActionResult> Get([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
     {
         try
         {
-            var products = _productService.FindAll();
-            return Ok(products);
+            var (products, totalItems) = await _productService.FindAll(pageNumber, pageSize);
+            var response = new
+            {
+                PageNumber = pageNumber,
+                PageSize = pageSize,
+                TotalItems = totalItems,
+                TotalPages = (int)Math.Ceiling(totalItems / (double)pageSize),
+                Items = products
+            };
+
+            return Ok(response);
 
         }
         catch (Exception ex)

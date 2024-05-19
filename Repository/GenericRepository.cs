@@ -16,9 +16,13 @@ public class GenericRepository<T> : IGenericRepository<T> where T : BaseModel
         dataset = _context.Set<T>();
     }
 
-    public virtual List<T> FindAll()
+    public virtual async Task<(List<T>, int)> FindAll(int pageNumber, int pageSize)
     {
-        return dataset.ToList();
+        var totalItems = await dataset.CountAsync();
+        var products =  await dataset.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
+
+        return (products, totalItems);
+
     }
     
     public virtual T FindById(Guid id)
