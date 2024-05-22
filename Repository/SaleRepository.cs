@@ -16,6 +16,7 @@ public class SaleRepository : GenericRepository<Sale>, ISaleRepository
     {
         var totalItems = await dataset.CountAsync();
         var sales = await dataset
+            .OrderByDescending(x => x.CreatedOn)
             .Skip((pageNumber - 1) * pageSize)
             .Take(pageSize)
             .Include(s => s.Product)

@@ -3,6 +3,7 @@ using SalesCrud.Services.Interfaces;
 using SalesCrud.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using SalesCrud.Model;
+using SalesCrud.Services;
 
 namespace SalesCrud.Controllers;
 [Route("api/[controller]")]
@@ -65,6 +66,22 @@ public class ClientController : ControllerBase
         {
             var product = _clientService.FindAllByName(name);
             return Ok(product);
+        }
+        catch (Exception ex)
+        {
+            var errors = new List<ValidationError> { new(ex.Message) };
+
+            return BadRequest(new ValidationResultModel(400, errors));
+        }
+    }
+
+    [HttpGet("bestSeller")]
+    public async Task<IActionResult> Get()
+    {
+        try
+        {
+            var (client, saleCount) = await _clientService.FindBestSeller();
+            return Ok(new { Client = client, SaleCount = saleCount });
         }
         catch (Exception ex)
         {

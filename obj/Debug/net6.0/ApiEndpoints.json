@@ -101,6 +101,16 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "SalesCrud.Controllers.ClientController",
+    "Method": "Get",
+    "RelativePath": "api/Client/bestSeller",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "SalesCrud.Controllers.ProductController",
     "Method": "Get",
     "RelativePath": "api/Product",

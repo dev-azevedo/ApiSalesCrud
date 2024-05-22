@@ -36,6 +36,11 @@ public class ClientService : IClientService
         return _mapper.Map<List<ClientRespViewModel>>(clients);
     }
 
+    public async Task<(ClientRespViewModel, int)> FindBestSeller()
+    {
+        var (client, totalSales) = await _clientRepository.FindBestSeller();
+        return (_mapper.Map<ClientRespViewModel>(client), totalSales);
+    }
     public ClientRespViewModel Created(ClientPostViewModel clientViewModel)
     {
         var clientExists = _clientRepository.FindByName(clientViewModel.Name);
@@ -69,4 +74,6 @@ public class ClientService : IClientService
     {
         _clientRepository.Delete(id);
     }
+
+   
 }

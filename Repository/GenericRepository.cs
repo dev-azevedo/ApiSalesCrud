@@ -19,7 +19,11 @@ public class GenericRepository<T> : IGenericRepository<T> where T : BaseModel
     public virtual async Task<(List<T>, int)> FindAll(int pageNumber, int pageSize)
     {
         var totalItems = await dataset.CountAsync();
-        var products =  await dataset.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
+        var products =  await dataset
+            .OrderByDescending(x => x.CreatedOn)
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
 
         return (products, totalItems);
 

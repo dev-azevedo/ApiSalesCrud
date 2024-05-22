@@ -3,6 +3,7 @@ using SalesCrud.Services.Interfaces;
 using SalesCrud.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using SalesCrud.Model;
+using SalesCrud.Services;
 
 namespace SalesCrud.Controllers;
 [Route("api/[controller]")]
@@ -73,6 +74,7 @@ public class SaleController : ControllerBase
             return BadRequest(new ValidationResultModel(400, errors));
         }
     }
+
 
     [HttpPost]
     public IActionResult Post([FromBody] SalePostViewModel saleViewModel)

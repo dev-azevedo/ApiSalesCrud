@@ -74,6 +74,8 @@ public class ProductController : ControllerBase
         }
     }
 
+   
+
     [HttpPost]
     public IActionResult Post([FromBody] ProductPostViewModel productViewModel)
     {
