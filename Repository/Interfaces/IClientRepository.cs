@@ -6,5 +6,5 @@ public interface IClientRepository : IGenericRepository<Client>
 {
     Client FindByName(string name);
     List<Client> FindAllByName(string name);
-    Task<(Client, int)> FindBestSeller();
+    Task<List<(Client, int)>> FindBestSeller();
 }

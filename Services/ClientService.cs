@@ -36,11 +36,13 @@ public class ClientService : IClientService
         return _mapper.Map<List<ClientRespViewModel>>(clients);
     }
 
-    public async Task<(ClientRespViewModel, int)> FindBestSeller()
+    public async Task<List<(ClientRespViewModel, int)>> FindBestSeller()
     {
-        var (client, totalSales) = await _clientRepository.FindBestSeller();
-        return (_mapper.Map<ClientRespViewModel>(client), totalSales);
+        var topThreeClients = await _clientRepository.FindBestSeller();
+
+        return topThreeClients.Select(c => (_mapper.Map<ClientRespViewModel>(c.Item1), c.Item2)).ToList();
     }
+
     public ClientRespViewModel Created(ClientPostViewModel clientViewModel)
     {
         var clientExists = _clientRepository.FindByName(clientViewModel.Name);
@@ -67,7 +69,7 @@ public class ClientService : IClientService
 
         var client = _mapper.Map<Client>(clientViewModel);
         client.EditedOn = DateTime.Now;
-        _clientRepository.Update(client);       
+        _clientRepository.Update(client);
     }
 
     public void Delete(Guid id)
@@ -75,5 +77,5 @@ public class ClientService : IClientService
         _clientRepository.Delete(id);
     }
 
-   
+
 }
