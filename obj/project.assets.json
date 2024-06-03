@@ -4579,11 +4579,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\VSO\\STUDY\\Teste\\ApiSalesCrud\\SalesCrud.csproj",
+      "projectUniqueName": "c:\\VSO\\GIT\\SalesCrud\\ApiSalesCrud\\SalesCrud.csproj",
       "projectName": "SalesCrud",
-      "projectPath": "C:\\VSO\\STUDY\\Teste\\ApiSalesCrud\\SalesCrud.csproj",
-      "packagesPath": "C:\\Users\\jhonatan.azevedo\\.nuget\\packages\\",
-      "outputPath": "C:\\VSO\\STUDY\\Teste\\ApiSalesCrud\\obj\\",
+      "projectPath": "c:\\VSO\\GIT\\SalesCrud\\ApiSalesCrud\\SalesCrud.csproj",
+      "packagesPath": "C:\\Users\\SeuBenedito\\.nuget\\packages\\",
+      "outputPath": "c:\\VSO\\GIT\\SalesCrud\\ApiSalesCrud\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\jhonatan.azevedo\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -4654,7 +4654,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.206/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.200\\RuntimeIdentifierGraph.json"
       }
     }
   }
