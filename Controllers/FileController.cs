@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SalesCrud.Services.Enums;
 using SalesCrud.Services.Interfaces;
 using SalesCrud.ViewModel;
 
@@ -15,20 +16,20 @@ public class FileController : ControllerBase
         _fileService = fileService;
     }
 
-    [HttpGet]
-    public IActionResult Get(string fileName)
+    [HttpGet("{destinationFile}/{id:guid}")]
+    public IActionResult Get([FromRoute] EDestinationFile destinationFile, [FromRoute] Guid id)
     {
-        var fileBytes = _fileService.GetFile(fileName);
+        var fileResult = _fileService.GetFile(destinationFile, id);
 
-        if (fileBytes == null)
+        if (fileResult == null)
         {
             return NotFound();
         }
 
-        var fileType = Path.GetExtension(fileName).ToLowerInvariant();
+        var fileType = Path.GetExtension(fileResult.FileName).ToLowerInvariant();
         var mimeType = _fileService.GetMimeType(fileType);
 
-        return File(fileBytes, mimeType, fileName);
+        return File(fileResult.FileBytes, mimeType, fileResult.FileName);
     }
 
     [HttpPost]
@@ -39,7 +40,7 @@ public class FileController : ControllerBase
             return BadRequest("Invalid file");
         }
 
-        FileViewModel detail = await _fileService.SaveFile(fileViewModel.File, fileViewModel.ProductId);
+        FileViewModel detail = await _fileService.SaveFile(fileViewModel.File, fileViewModel.ProductId, fileViewModel.DestinationFile);
         return Ok(detail);
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace SalesCrud.ViewModel;
+﻿using SalesCrud.Services.Enums;
+
+namespace SalesCrud.ViewModel;
 
 public class FileViewModel
 {
@@ -11,5 +13,6 @@ public class FilePostViewModel
 {
     public Guid ProductId { get; set; }
     public IFormFile File { get; set; }
+    public EDestinationFile DestinationFile { get; set; }
 }
 

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using SalesCrud.Exceptions;
 using SalesCrud.Model;
 using SalesCrud.Repository.Interfaces;
@@ -10,19 +11,23 @@ namespace SalesCrud.Services;
 public class ProductService : IProductService
 {
     private readonly IProductRepository _productRepository;
+    private readonly IFileService _fileService;
     private readonly IMapper _mapper;
 
-    public ProductService(IProductRepository productRepository, IMapper mapper)
+    public ProductService(IProductRepository productRepository, IMapper mapper, IFileService fileService)
     {
         _productRepository = productRepository;
         _mapper = mapper;
+        _fileService = fileService;
     }
 
     public async Task<(List<ProductRespViewModel>, int)> FindAll(int pageNumber, int pageSize)
     {
         var (products, totalItems) = await _productRepository.FindAll(pageNumber, pageSize);
 
-        return (_mapper.Map<List<ProductRespViewModel>>(products), totalItems);
+        var productsViewModels = _mapper.Map<List<ProductRespViewModel>>(products);
+
+        return (productsViewModels, totalItems);
     }
 
     public ProductRespViewModel FindById(Guid id)
@@ -36,7 +41,7 @@ public class ProductService : IProductService
         var clients = _productRepository.FindAllByDescription(description);
         return _mapper.Map<List<ProductRespViewModel>>(clients);
     }
-    
+
     public ProductRespViewModel Created(ProductPostViewModel productViewModel)
     {
         var productExists = _productRepository.FindByDescription(productViewModel.Description);
@@ -72,5 +77,5 @@ public class ProductService : IProductService
         _productRepository.Delete(id);
     }
 
-   
+  
 }

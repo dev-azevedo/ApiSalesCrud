@@ -2,6 +2,8 @@
 using SalesCrud.Services.Interfaces;
 using SalesCrud.ViewModel;
 using Microsoft.AspNetCore.Mvc;
+using SalesCrud.Services;
+using SalesCrud.Services.Enums;
 
 namespace SalesCrud.Controllers;
 [Route("api/[controller]")]
@@ -10,10 +12,12 @@ public class ProductController : ControllerBase
 {
 
     private readonly IProductService _productService;
+    private readonly IFileService _fileService;
 
-    public ProductController(IProductService productService)
+    public ProductController(IProductService productService, IFileService fileService)
     {
         _productService = productService;
+        _fileService = fileService;
     }
 
     [HttpGet]
@@ -22,6 +26,15 @@ public class ProductController : ControllerBase
         try
         {
             var (products, totalItems) = await _productService.FindAll(pageNumber, pageSize);
+
+
+            foreach (var product in products)
+            {
+
+                product.ImageUrl = _fileService.GetFilePath(EDestinationFile.Product, product.Id);
+
+            };
+
             var response = new
             {
                 PageNumber = pageNumber,
