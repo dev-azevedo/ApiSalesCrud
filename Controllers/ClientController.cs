@@ -80,8 +80,12 @@ public class ClientController : ControllerBase
     {
         try
         {
-            var (client, saleCount) = await _clientService.FindBestSeller();
-            return Ok(new { Client = client, SaleCount = saleCount });
+            var topThreeClients = await _clientService.FindBestSeller();
+            return Ok(topThreeClients.Select(c => new
+            {
+                Client = c.Item1,
+                SaleCount = c.Item2,
+            }).ToList());
         }
         catch (Exception ex)
         {

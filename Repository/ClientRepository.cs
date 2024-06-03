@@ -22,16 +22,18 @@ public class ClientRepository : GenericRepository<Client>, IClientRepository
         return dataset.Where(p => p.Name.Contains(name)).ToList();
     }
 
-    public async Task<(Client, int)> FindBestSeller()
+    public async Task<List<(Client, int)>> FindBestSeller()
     {
 
-        var clientWithMostSales = await dataset.Select(c => new
-         {
-             Client = c,
-             SaleCount = c.Sales.Count()
-         }).OrderByDescending(c => c.SaleCount)
-         .FirstOrDefaultAsync();
+        var topThreeClients = await dataset.Select(c => new
+        {
+            Client = c,
+            SaleCount = c.Sales.Count()
+        })
+        .OrderByDescending(c => c.SaleCount)
+        .Take(3)
+        .ToListAsync();
 
-        return (clientWithMostSales.Client, clientWithMostSales.SaleCount);
+        return topThreeClients.Select(c => (c.Client, c.SaleCount)).ToList();
     }
 }
