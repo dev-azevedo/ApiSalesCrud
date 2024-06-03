@@ -25,4 +25,8 @@
     <None Include="C:\VSO\GIT\SalesCrud\SalesCrud\.editorconfig" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Upload\Product\" />
+  </ItemGroup>
+
 </Project>
