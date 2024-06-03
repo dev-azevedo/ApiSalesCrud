@@ -13,6 +13,5 @@ public class FilePostViewModel
 {
     public Guid ProductId { get; set; }
     public IFormFile File { get; set; }
-    public EDestinationFile DestinationFile { get; set; }
 }
 

@@ -32,15 +32,15 @@ public class FileController : ControllerBase
         return File(fileResult.FileBytes, mimeType, fileResult.FileName);
     }
 
-    [HttpPost]
-    public async Task<IActionResult> Post([FromForm] FilePostViewModel fileViewModel)
-    {
-        if (fileViewModel.File == null || fileViewModel.File.Length == 0)
-        {
-            return BadRequest("Invalid file");
-        }
+    //[HttpPost]
+    //public async Task<IActionResult> Post([FromForm] FilePostViewModel fileViewModel)
+    //{
+    //    if (fileViewModel.File == null || fileViewModel.File.Length == 0)
+    //    {
+    //        return BadRequest("Invalid file");
+    //    }
 
-        FileViewModel detail = await _fileService.SaveFile(fileViewModel.File, fileViewModel.ProductId, fileViewModel.DestinationFile);
-        return Ok(detail);
-    }
+    //    FileViewModel detail = await _fileService.SaveFile(fileViewModel.File, fileViewModel.ProductId, fileViewModel.DestinationFile);
+    //    return Ok(detail);
+    //}
 }

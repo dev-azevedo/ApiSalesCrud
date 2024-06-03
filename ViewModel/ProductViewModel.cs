@@ -24,6 +24,7 @@ public class ProductPutViewModel
     [Required(ErrorMessage = "O campo valor unitário é obrigatório.")]
     [Range(0.01, double.MaxValue, ErrorMessage = "O campo valor unitário deve ser maior que zero.")]
     public decimal UnitaryValue { get; set; }
+    public string PathImage { get; set; }
 }
 
 public class ProductRespViewModel
@@ -31,5 +32,5 @@ public class ProductRespViewModel
     public Guid Id { get; set; }
     public string Description { get; set; }
     public decimal UnitaryValue { get; set; }
-    public string ImageUrl { get; set; }
+    public string PathImage { get; set; }
 }

@@ -27,14 +27,6 @@ public class ProductController : ControllerBase
         {
             var (products, totalItems) = await _productService.FindAll(pageNumber, pageSize);
 
-
-            foreach (var product in products)
-            {
-
-                product.ImageUrl = _fileService.GetFilePath(EDestinationFile.Product, product.Id);
-
-            };
-
             var response = new
             {
                 PageNumber = pageNumber,
@@ -87,8 +79,7 @@ public class ProductController : ControllerBase
         }
     }
 
-   
-
+  
     [HttpPost]
     public IActionResult Post([FromBody] ProductPostViewModel productViewModel)
     {
@@ -109,6 +100,33 @@ public class ProductController : ControllerBase
 
             return BadRequest(new ValidationResultModel(400, errors));
         }
+    }
+
+
+    [HttpPost("file")]
+    public async Task<IActionResult> PostFile([FromForm] FilePostViewModel fileViewModel)
+    {
+        if (fileViewModel.File == null || fileViewModel.File.Length == 0)
+        {
+            return BadRequest("Invalid file");
+        }
+
+        FileViewModel detail = await _fileService.SaveFile(fileViewModel.File, fileViewModel.ProductId, EDestinationFile.Product);
+
+        var product = _productService.FindById(fileViewModel.ProductId);
+
+
+        ProductPutViewModel updateProduct = new ProductPutViewModel
+        {
+            Id = fileViewModel.ProductId,
+            Description = product.Description,
+            UnitaryValue = product.UnitaryValue,
+            PathImage = detail.Url
+        };
+
+        _productService.Updated(updateProduct);
+
+        return Ok(detail);
     }
 
     [HttpPut]

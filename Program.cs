@@ -34,7 +34,6 @@ builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepositor
 
 builder.Services.AddAutoMapper(typeof(AutoMapperConfig));
 
-// Configurações do ServiceCollection devem ser feitas antes de builder.Build()
 builder.Services.PostConfigure<ApiBehaviorOptions>(options =>
 {
     options.InvalidModelStateResponseFactory = actionContext =>
@@ -49,13 +48,6 @@ builder.Services.PostConfigure<ApiBehaviorOptions>(options =>
 
 
 var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-//if (app.Environment.IsDevelopment())
-//{
-//    app.UseSwagger();
-//    app.UseSwaggerUI();
-//}
 
 if (app.Environment.IsDevelopment())
 {

@@ -24,5 +24,11 @@ public class AppDbContext : DbContext
             .HasOne(s => s.Product)
             .WithMany(p => p.Sales)
             .HasForeignKey(s => s.ProductId);
+
+        modelBuilder.Entity<Product>(entity =>
+        {
+            entity.Property(e => e.PathImage)
+                  .IsRequired(false);
+        });
     }
 }
