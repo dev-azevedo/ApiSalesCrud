@@ -76,7 +76,7 @@ public class ClientController : ControllerBase
     }
 
     [HttpGet("bestSeller")]
-    public async Task<IActionResult> Get()
+    public async Task<IActionResult> GetBestSeller()
     {
         try
         {

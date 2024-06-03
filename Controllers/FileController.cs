@@ -31,10 +31,15 @@ public class FileController : ControllerBase
         return File(fileBytes, mimeType, fileName);
     }
 
-    [HttpPost("{id:guid}")]
-    public async Task<IActionResult> Post([FromForm] IFormFile file, Guid id)
+    [HttpPost]
+    public async Task<IActionResult> Post([FromForm] FilePostViewModel fileViewModel)
     {
-        FileViewModel detail = await _fileService.SaveFile(file, id);
+        if (fileViewModel.File == null || fileViewModel.File.Length == 0)
+        {
+            return BadRequest("Invalid file");
+        }
+
+        FileViewModel detail = await _fileService.SaveFile(fileViewModel.File, fileViewModel.ProductId);
         return Ok(detail);
     }
 }
