@@ -157,6 +157,7 @@ public class ProductController : ControllerBase
     {
         try
         {
+            _fileService.DeleteFile(id, EDestinationFile.Product);
             _productService.Delete(id);
             return NoContent();
         }
