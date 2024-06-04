@@ -167,4 +167,33 @@ public class ProductController : ControllerBase
             return BadRequest(new ValidationResultModel(400, errors));
         }
     }
+    
+    [HttpDelete("file/{id:guid}")]
+    public IActionResult DeleteFile([FromRoute] Guid id)
+    {
+        try
+        {
+            _fileService.DeleteFile(id, EDestinationFile.Product);
+
+            var product = _productService.FindById(id);
+
+
+            ProductPutViewModel updateProduct = new ProductPutViewModel
+            {
+                Id = id,
+                Description = product.Description,
+                UnitaryValue = product.UnitaryValue,
+                PathImage = null
+            };
+
+            _productService.Updated(updateProduct);
+            return NoContent();
+        }
+        catch (Exception ex)
+        {
+            var errors = new List<ValidationError> { new(ex.Message) };
+
+            return BadRequest(new ValidationResultModel(400, errors));
+        }
+    }
 }

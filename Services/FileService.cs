@@ -42,7 +42,7 @@ public class FileService : IFileService
     }
 
     public async Task<FileViewModel> SaveFile(IFormFile file, Guid ProductId, EDestinationFile destinationFile)
-    {
+        {
         FileViewModel fileDetail = new();
 
         var fileSavePath = Path.Combine(_basePath, destinationFile.ToString());
@@ -59,10 +59,17 @@ public class FileService : IFileService
 
         if (fileTypes.Contains(fileType.ToLower()))
         {
-            var fileName = $"{ProductId}.{fileType}";
+            var fileName = $"{ProductId}{fileType}";
             if ((file != null && file.Length > 0))
             {
                 var destination = Path.Combine(fileSavePath, "", fileName);
+
+                if (File.Exists(destination))
+                {
+                    File.Delete(destination);
+                }
+
+
                 fileDetail.Name = fileName;
                 fileDetail.Type = fileType;
                 fileDetail.Url = $"{baseUrl}/api/file/{destinationFile.GetHashCode()}/{ProductId}";
@@ -73,6 +80,35 @@ public class FileService : IFileService
         }
 
         return fileDetail;
+    }
+
+
+    public void DeleteFile(Guid productId, EDestinationFile destinationFile)
+    {
+        if (productId == Guid.Empty)
+        {
+            throw new ArgumentException("Invalid productId", nameof(productId));
+        }
+
+        var searchPattern = $"{productId}.*";
+        var fileSavePath = Path.Combine(_basePath, destinationFile.ToString());
+
+        if(!Directory.Exists(fileSavePath))
+    {
+            throw new DirectoryNotFoundException($"The directory {fileSavePath} does not exist.");
+        }
+
+        var files = Directory.GetFiles(fileSavePath, searchPattern);
+
+        if (files.Length > 0)
+        {
+            var filePath = files[0];
+
+            if (File.Exists(filePath))
+            {
+                File.Delete(filePath);
+            }
+        }
     }
 
     public string GetMimeType(string extension)

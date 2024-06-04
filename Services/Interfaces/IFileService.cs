@@ -8,6 +8,7 @@ public interface IFileService
 {
     public FileResult GetFile(EDestinationFile destinationFile, Guid id);
     public Task<FileViewModel> SaveFile(IFormFile file, Guid ProductId, EDestinationFile destinationFile);
+    public void DeleteFile(Guid productId, EDestinationFile destinationFile);
     public string GetMimeType(string extension);
     public string GetFilePath(EDestinationFile destinationFile, Guid ProductId);
 }
