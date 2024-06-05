@@ -5,19 +5,21 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SalesCrud.Migrations
 {
-    public partial class TablesToProject : Migration
+    /// <inheritdoc />
+    public partial class ConfigToSqlite : Migration
     {
+        /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
                 name: "Clients",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    City = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    EditedOn = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Id = table.Column<string>(type: "TEXT", nullable: false),
+                    Name = table.Column<string>(type: "TEXT", nullable: true),
+                    City = table.Column<string>(type: "TEXT", nullable: true),
+                    CreatedOn = table.Column<DateTime>(type: "TEXT", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
+                    EditedOn = table.Column<DateTime>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -28,11 +30,12 @@ namespace SalesCrud.Migrations
                 name: "Products",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UnitaryValue = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    EditedOn = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Id = table.Column<string>(type: "TEXT", nullable: false),
+                    Description = table.Column<string>(type: "TEXT", nullable: true),
+                    UnitaryValue = table.Column<decimal>(type: "TEXT", nullable: false),
+                    PathImage = table.Column<string>(type: "TEXT", nullable: true),
+                    CreatedOn = table.Column<DateTime>(type: "TEXT", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
+                    EditedOn = table.Column<DateTime>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -43,17 +46,17 @@ namespace SalesCrud.Migrations
                 name: "Sales",
                 columns: table => new
                 {
-                    ClientId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    SalesQuantity = table.Column<int>(type: "int", nullable: false),
-                    ValueSale = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    EditedOn = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Id = table.Column<string>(type: "TEXT", nullable: false),
+                    ClientId = table.Column<string>(type: "TEXT", nullable: false),
+                    ProductId = table.Column<string>(type: "TEXT", nullable: false),
+                    ProductQuantity = table.Column<int>(type: "INTEGER", nullable: false),
+                    ValueSale = table.Column<decimal>(type: "TEXT", nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "TEXT", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
+                    EditedOn = table.Column<DateTime>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Sales", x => new { x.ClientId, x.ProductId });
+                    table.PrimaryKey("PK_Sales", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Sales_Clients_ClientId",
                         column: x => x.ClientId,
@@ -69,10 +72,9 @@ namespace SalesCrud.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Sales_ClientId_ProductId",
+                name: "IX_Sales_ClientId",
                 table: "Sales",
-                columns: new[] { "ClientId", "ProductId" },
-                unique: true);
+                column: "ClientId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Sales_ProductId",
@@ -80,6 +82,7 @@ namespace SalesCrud.Migrations
                 column: "ProductId");
         }
 
+        /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(

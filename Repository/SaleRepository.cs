@@ -37,12 +37,13 @@ public class SaleRepository : GenericRepository<Sale>, ISaleRepository
     }
 
     public List<Sale> FindAllByNameOrDescription(string nameOrDescription)
-    {
+    { 
+        var nameOrDescriptionLower = nameOrDescription.ToLower();
         return dataset
             .Include(s => s.Product)
             .Include(s => s.Client)
             .AsNoTracking()
-            .Where(s => s.Client.Name.Contains(nameOrDescription) || s.Product.Description.Contains(nameOrDescription))
+            .Where(s => s.Client.Name.ToLower().Contains(nameOrDescriptionLower) || s.Product.Description.ToLower().Contains(nameOrDescriptionLower))
             .ToList();
     }
 }

@@ -18,6 +18,6 @@ public class ProductRepository : GenericRepository<Product>, IProductRepository
 
     public List<Product> FindAllByDescription(string description)
     {
-        return dataset.Where(p => p.Description.Contains(description)).ToList();
+        return dataset.Where(p => p.Description.ToLower().Contains(description.ToLower())).ToList();
     }
 }

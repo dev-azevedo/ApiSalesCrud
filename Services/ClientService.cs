@@ -45,9 +45,9 @@ public class ClientService : IClientService
 
     public ClientRespViewModel Created(ClientPostViewModel clientViewModel)
     {
-        var clientExists = _clientRepository.FindByName(clientViewModel.Name);
-        if (clientExists != null && clientExists.City == clientViewModel.City)
-            throw new DomainException("Já existe cadastro de cliente com o nome e cidade informado.");
+        var clientExists = _clientRepository.FindByEmail(clientViewModel.Email);
+        if (clientExists != null)
+            throw new DomainException("Já existe cadastro de cliente com o email informado.");
 
 
         var client = _mapper.Map<Client>(clientViewModel);
@@ -63,9 +63,9 @@ public class ClientService : IClientService
         if (!clientExists)
             throw new DomainException("Não encontramos o cliente informado.");
 
-        var clientExistsByName = _clientRepository.FindByName(clientViewModel.Name);
-        if (clientExistsByName != null && clientExistsByName.Id != clientViewModel.Id && clientExistsByName.City == clientViewModel.City)
-            throw new DomainException("Já existe cadastro de cliente com o nome e cidade informado.");
+        var clientExistsByEmail = _clientRepository.FindByEmail(clientViewModel.Email);
+        if (clientExistsByEmail != null && clientExistsByEmail.Id != clientViewModel.Id)
+            throw new DomainException("Já existe cadastro de cliente com o email informado.");
 
         var client = _mapper.Map<Client>(clientViewModel);
         client.EditedOn = DateTime.Now;

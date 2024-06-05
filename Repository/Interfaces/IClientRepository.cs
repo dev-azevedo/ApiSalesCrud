@@ -4,7 +4,7 @@ namespace SalesCrud.Repository.Interfaces;
 
 public interface IClientRepository : IGenericRepository<Client>
 {
-    Client FindByName(string name);
+    Client FindByEmail(string email);
     List<Client> FindAllByName(string name);
     Task<List<(Client, int)>> FindBestSeller();
 }

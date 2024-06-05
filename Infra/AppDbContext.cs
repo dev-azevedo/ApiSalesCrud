@@ -11,24 +11,60 @@ public class AppDbContext : DbContext
 
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) {}
 
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        optionsBuilder.UseSqlite("Data Source=SalesCrud.db");
+    }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        // Configuração da relação entre Client e Sale
+        modelBuilder.Entity<Client>(entity =>
+        {
+            entity.Property(e => e.Id).HasColumnType("TEXT").HasConversion(v => v.ToString(), v => Guid.Parse(v));
+            entity.Property(e => e.Name).HasColumnType("TEXT");
+            entity.Property(e => e.Email).HasColumnType("TEXT");
+            entity.Property(e => e.City).HasColumnType("TEXT");
+            entity.Property(e => e.PathImage).HasColumnType("TEXT").IsRequired(false);
+            entity.Property(e => e.CreatedOn)
+                 .HasColumnType("TEXT")
+                 .HasDefaultValueSql("CURRENT_TIMESTAMP");
+            entity.Property(e => e.EditedOn).HasColumnType("TEXT");
+
+            entity.HasIndex(e => e.Email).IsUnique();
+        });
+
+        modelBuilder.Entity<Product>(entity =>
+        {
+            entity.Property(e => e.Id).HasColumnType("TEXT").HasConversion(v => v.ToString(), v => Guid.Parse(v));
+            entity.Property(e => e.Description).HasColumnType("TEXT");
+            entity.Property(e => e.UnitaryValue).HasColumnType("TEXT");
+            entity.Property(e => e.PathImage).HasColumnType("TEXT").IsRequired(false);
+            entity.Property(e => e.CreatedOn)
+                 .HasColumnType("TEXT")
+                 .HasDefaultValueSql("CURRENT_TIMESTAMP");
+            entity.Property(e => e.EditedOn).HasColumnType("TEXT").IsRequired(false);
+        });
+
+        modelBuilder.Entity<Sale>(entity =>
+        {
+            entity.Property(e => e.Id).HasColumnType("TEXT").HasConversion(v => v.ToString(), v => Guid.Parse(v));
+            entity.Property(e => e.ProductId).HasColumnType("TEXT").HasConversion(v => v.ToString(), v => Guid.Parse(v));
+            entity.Property(e => e.ClientId).HasColumnType("TEXT").HasConversion(v => v.ToString(), v => Guid.Parse(v));
+            entity.Property(e => e.ValueSale).HasColumnType("TEXT");
+            entity.Property(e => e.ProductQuantity).HasColumnType("INTEGER");
+            entity.Property(e => e.CreatedOn)
+                 .HasColumnType("TEXT")
+                 .HasDefaultValueSql("CURRENT_TIMESTAMP");
+            entity.Property(e => e.EditedOn).HasColumnType("TEXT").IsRequired(false);
+        });
+
         modelBuilder.Entity<Sale>()
             .HasOne(s => s.Client)
             .WithMany(c => c.Sales)
             .HasForeignKey(s => s.ClientId);
 
-        // Configuração da relação entre Product e Sale
         modelBuilder.Entity<Sale>()
             .HasOne(s => s.Product)
             .WithMany(p => p.Sales)
             .HasForeignKey(s => s.ProductId);
-
-        modelBuilder.Entity<Product>(entity =>
-        {
-            entity.Property(e => e.PathImage)
-                  .IsRequired(false);
-        });
     }
 }

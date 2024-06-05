@@ -12,14 +12,14 @@ public class ClientRepository : GenericRepository<Client>, IClientRepository
     public ClientRepository(AppDbContext context) : base(context)
     { }
 
-    public Client FindByName(string name)
+    public Client FindByEmail(string email)
     {
-        return dataset.SingleOrDefault(p => p.Name == name);
+        return dataset.SingleOrDefault(p => p.Email == email);
     }
 
     public List<Client> FindAllByName(string name)
     {
-        return dataset.Where(p => p.Name.Contains(name)).ToList();
+        return dataset.Where(p => p.Name.ToLower().Contains(name.ToLower())).ToList();
     }
 
     public async Task<List<(Client, int)>> FindBestSeller()
