@@ -1,9 +1,11 @@
 ﻿using SalesCrud.Model;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace SalesCrud.Infra;
 
-public class AppDbContext : DbContext
+public class AppDbContext : IdentityDbContext<IdentityUser>
 {
     public DbSet<Sale> Sales { get; set; }
     public DbSet<Client> Clients { get; set; }
@@ -13,10 +15,16 @@ public class AppDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseSqlite("Data Source=SalesCrud.db");
+        if (!optionsBuilder.IsConfigured)
+        {
+            optionsBuilder.UseSqlite("Data Source=SalesCrud.db");
+        }
     }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+         base.OnModelCreating(modelBuilder);
+
         modelBuilder.Entity<Client>(entity =>
         {
             entity.Property(e => e.Id).HasColumnType("TEXT").HasConversion(v => v.ToString(), v => Guid.Parse(v));
