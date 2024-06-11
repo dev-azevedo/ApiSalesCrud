@@ -149,18 +149,71 @@ public class AuthController : ControllerBase
         }
     }
 
+    [HttpPost("validate")]
+    public async Task<IActionResult> ValidateToken([FromBody] string token)
+    {
+        try
+        {
+            var principal = ValidateToToken(token);
+            if (principal == null)
+            {
+                return Unauthorized(
+                    new ValidationResultModel(
+                        401,
+                        new List<ValidationError> { new("Token inválido") }
+                    )
+                );
+            }
+
+            var userId = principal
+                .Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)
+                ?.Value;
+
+            if (userId == null)
+            {
+                return Unauthorized(new ValidationResultModel(401, [new("Token inválido")]));
+            }
+
+            var user = await _userManager.FindByIdAsync(userId);
+
+            if (user == null)
+            {
+                return Unauthorized(new ValidationResultModel(401, [new("Token inválido")]));
+            }
+
+            var claims = await _userManager.GetClaimsAsync(user);
+
+            var fullNameClaim = claims.FirstOrDefault(c => c.Type == ClaimTypes.Name);
+            var fullName = fullNameClaim?.Value;
+
+            return Ok(
+                new
+                {
+                    fullName,
+                    Id = user.Id,
+                    Email = user.Email,
+                    token
+                }
+            );
+        }
+        catch (Exception ex)
+        {
+            var errors = new List<ValidationError> { new(ex.Message) };
+            return BadRequest(new ValidationResultModel(400, errors));
+        }
+    }
+
     private string GenereteToken(IdentityUser user)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
-        var key = Encoding.ASCII.GetBytes(_configuration["Jwt:SecretKey"]);
+        var key = Encoding.ASCII.GetBytes(_configuration["TokenConfigurations:SecretKey"]);
         var tokenDescriptor = new SecurityTokenDescriptor
         {
             Subject = new ClaimsIdentity(
-                new Claim[]
-                {
-                    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                    new Claim(ClaimTypes.Email, user.Email),
-                }
+                [
+                    new(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                    new(ClaimTypes.Email, user.Email),
+                ]
             ),
             Expires = DateTime.UtcNow.AddDays(2),
             SigningCredentials = new SigningCredentials(
@@ -171,5 +224,72 @@ public class AuthController : ControllerBase
 
         var token = tokenHandler.CreateToken(tokenDescriptor);
         return tokenHandler.WriteToken(token);
+    }
+
+    private async Task<ClaimsPrincipal> ValidateToToken(string token)
+    {
+        var tokenHandler = new JwtSecurityTokenHandler();
+        var key = Encoding.ASCII.GetBytes(_configuration["TokenConfigurations:SecretKey"]);
+
+        var validationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = _configuration["TokenConfigurations:Issuer"],
+            ValidAudience = _configuration["TokenConfigurations:Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(key),
+            ClockSkew = TimeSpan.Zero // Opcional: para evitar problemas de diferença de tempo
+        };
+
+        try
+        {
+            var principal = tokenHandler.ValidateToken(
+                token,
+                validationParameters,
+                out SecurityToken validatedToken
+            );
+
+            // Verificar se o token é um JwtSecurityToken válido
+            if (validatedToken is JwtSecurityToken jwtToken)
+            {
+                // Verificar o algoritmo de assinatura
+                if (jwtToken.Header.Alg != SecurityAlgorithms.HmacSha256)
+                {
+                    throw new SecurityTokenException("Algoritmo de assinatura inválido.");
+                }
+
+                // Verificar as reivindicações (claims)
+                var userId = principal
+                    .Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)
+                    ?.Value;
+                var userEmail = principal
+                    .Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)
+                    ?.Value;
+
+                // Aqui, você pode adicionar mais verificações de reivindicações conforme necessário
+
+                if (string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(userEmail))
+                {
+                    throw new SecurityTokenException("Reivindicações inválidas no token.");
+                }
+
+                var user = await _userManager.FindByIdAsync(userId);
+                if (user == null || user.Email != userEmail)
+                {
+                    throw new SecurityTokenException(
+                        "Reivindicações de usuário inválidas no token."
+                    );
+                }
+            }
+
+            return principal;
+        }
+        catch
+        {
+            // Token inválido
+            return null;
+        }
     }
 }

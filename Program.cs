@@ -1,3 +1,14 @@
+using System.Text;
+using ApiSalesCrud.Configurations;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using SalesCrud.AutoMapper;
 using SalesCrud.Exceptions;
 using SalesCrud.Infra;
@@ -5,46 +16,112 @@ using SalesCrud.Repository;
 using SalesCrud.Repository.Interfaces;
 using SalesCrud.Services;
 using SalesCrud.Services.Interfaces;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection.Extensions;
-using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlite(builder.Configuration["ConnectionStrings:ConnectionSqLite"]));
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlite(builder.Configuration["ConnectionStrings:ConnectionSqLite"])
+);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
-builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
+builder.Services.AddSwaggerGen(swagger =>
 {
-    options.SignIn.RequireConfirmedEmail = false;
-    options.SignIn.RequireConfirmedAccount = false;
-    options.User.RequireUniqueEmail = true;
-})
-.AddEntityFrameworkStores<AppDbContext>()
-.AddDefaultTokenProviders();
+    #region esquema de segurança JWT
+    swagger.AddSecurityDefinition(
+        "Bearer",
+        new OpenApiSecurityScheme
+        {
+            In = ParameterLocation.Header,
+            Description = "JWT Authotization header 'Authotization: Bearer token' ",
+            Name = "Authorization",
+            Type = SecuritySchemeType.ApiKey,
+        }
+    );
+
+    swagger.AddSecurityRequirement(
+        new OpenApiSecurityRequirement
+        {
+            {
+                new OpenApiSecurityScheme
+                {
+                    Reference = new OpenApiReference
+                    {
+                        Type = ReferenceType.SecurityScheme,
+                        Id = "Bearer"
+                    }
+                },
+                Array.Empty<string>()
+            }
+        }
+    );
+    #endregion
+});
+
+builder
+    .Services.AddIdentity<IdentityUser, IdentityRole>(options =>
+    {
+        options.SignIn.RequireConfirmedEmail = false;
+        options.SignIn.RequireConfirmedAccount = false;
+        options.User.RequireUniqueEmail = true;
+    })
+    .AddEntityFrameworkStores<AppDbContext>()
+    .AddDefaultTokenProviders();
 
 builder.Services.AddScoped<RoleManager<IdentityRole>>();
 
-builder.Services.AddAuthorization();
+#region JWT
+var tokenConfiguration = new TokenConfiguration();
 
-builder.Services..AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-        .AddJwtBearer(options =>
+new ConfigureFromConfigurationOptions<TokenConfiguration>(
+    builder.Configuration.GetSection("TokenConfigurations")
+).Configure(tokenConfiguration);
+
+builder.Services.AddSingleton(tokenConfiguration);
+
+builder
+    .Services.AddAuthentication(options =>
+    {
+        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    })
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
         {
-            options.TokenValidationParameters = new TokenValidationParameters
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = tokenConfiguration.Issuer,
+            ValidAudience = tokenConfiguration.Audience,
+            IssuerSigningKey = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(tokenConfiguration.SecretKey)
+            )
+        };
+
+        options.Events = new JwtBearerEvents
+        {
+            OnAuthenticationFailed = context =>
             {
-                ValidateIssuer = true,
-                ValidateAudience = true,
-                ValidateLifetime = true,
-                ValidateIssuerSigningKey = true,
-                ValidIssuer = Configuration["Jwt:Issuer"],
-                ValidAudience = Configuration["Jwt:Audience"],
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:SecretKey"]))
-            };
-        });
+                context.NoResult();
+                context.Response.StatusCode = 401;
+                context.Response.ContentType = "text/plain";
+                return context.Response.WriteAsync("Unauthorized");
+            }
+        };
+    });
+
+builder
+    .Services.AddAuthorizationBuilder()
+    .AddPolicy(
+        "Bearer",
+        new AuthorizationPolicyBuilder()
+            .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
+            .RequireAuthenticatedUser()
+            .Build()
+    );
+#endregion
 
 builder.Services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
@@ -65,13 +142,18 @@ builder.Services.PostConfigure<ApiBehaviorOptions>(options =>
 {
     options.InvalidModelStateResponseFactory = actionContext =>
     {
-        var errors = actionContext.ModelState.Keys.SelectMany(key => actionContext.ModelState[key].Errors.Select(x => new ValidationError(x.ErrorMessage))).ToList();
-    
+        var errors = actionContext
+            .ModelState.Keys.SelectMany(key =>
+                actionContext
+                    .ModelState[key]
+                    .Errors.Select(x => new ValidationError(x.ErrorMessage))
+            )
+            .ToList();
+
         var model = new ValidationResultModel(400, errors);
         return new BadRequestObjectResult(model);
     };
 });
-
 
 var app = builder.Build();
 
@@ -90,11 +172,7 @@ else
     app.UseHsts();
 }
 
-
-app.UseCors(x => x
-                .AllowAnyOrigin()
-                .AllowAnyMethod()
-                .AllowAnyHeader());
+app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
 app.UseHttpsRedirection();
 

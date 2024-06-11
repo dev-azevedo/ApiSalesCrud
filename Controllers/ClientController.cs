@@ -6,9 +6,9 @@ using SalesCrud.Enums;
 using Microsoft.AspNetCore.Authorization;
 
 namespace SalesCrud.Controllers;
+[Authorize]
 [Route("api/[controller]")]
 [ApiController]
-[Authorize]
 public class ClientController : ControllerBase
 {
     private readonly IClientService _clientService;
