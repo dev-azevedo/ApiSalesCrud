@@ -3,7 +3,7 @@ using SalesCrud.Services.Interfaces;
 using SalesCrud.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using SalesCrud.Services;
-using SalesCrud.Services.Enums;
+using SalesCrud.Enums;
 
 namespace SalesCrud.Controllers;
 [Route("api/[controller]")]

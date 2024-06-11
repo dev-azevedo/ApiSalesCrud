@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using SalesCrud.Services.Enums;
+using SalesCrud.Enums;
 using SalesCrud.Services.Interfaces;
 using SalesCrud.ViewModel;
 

@@ -1,4 +1,4 @@
-﻿using SalesCrud.Services.Enums;
+﻿using SalesCrud.Enums;
 
 namespace SalesCrud.ViewModel;
 

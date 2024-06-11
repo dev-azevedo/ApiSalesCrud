@@ -1,4 +1,4 @@
-﻿namespace SalesCrud.Services.Enums;
+﻿namespace SalesCrud.Enums;
 
 public enum EDestinationFile
 {

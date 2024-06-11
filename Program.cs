@@ -27,6 +27,8 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
 .AddEntityFrameworkStores<AppDbContext>()
 .AddDefaultTokenProviders();
 
+builder.Services.AddScoped<RoleManager<IdentityRole>>();
+
 builder.Services.AddAuthorization();
 
 builder.Services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();

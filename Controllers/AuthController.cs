@@ -2,6 +2,7 @@ using ApiSalesCrud.ViewModel;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SalesCrud.Exceptions;
+using System.Security.Claims;
 
 namespace ApiSalesCrud.Controllers;
 
@@ -26,12 +27,25 @@ public class AuthController : ControllerBase
     {
         if (!ModelState.IsValid)
         {
-            return BadRequest(ModelState);
+            var errors = new List<ValidationError>();
+            foreach (var modelState in ModelState.Values)
+            {
+                foreach (var error in modelState.Errors)
+                {
+                    errors.Add(new ValidationError(error.ErrorMessage));
+                }
+            }
+            return BadRequest(new ValidationResultModel(400, errors));
         }
 
         if (model.Password != model.ConfirmPassword)
         {
-            return BadRequest("As senhas não coincidem");
+            return BadRequest(
+                new ValidationResultModel(
+                    401,
+                    new List<ValidationError> { new("As senhas não coincidem") }
+                )
+            );
         }
 
         try
@@ -41,6 +55,10 @@ public class AuthController : ControllerBase
 
             if (result.Succeeded)
             {
+                await _userManager.AddToRoleAsync(user, model.UserRole.ToString());
+                await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Name, model.FullName));
+                await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.DateOfBirth, model.DateOfBirth.ToString()));
+
                 return Ok("Usuário criado com sucesso");
             }
 
