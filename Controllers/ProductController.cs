@@ -4,10 +4,12 @@ using SalesCrud.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using SalesCrud.Services;
 using SalesCrud.Enums;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SalesCrud.Controllers;
 [Route("api/[controller]")]
 [ApiController]
+[Authorize]
 public class ProductController : ControllerBase
 {
 
@@ -19,6 +21,7 @@ public class ProductController : ControllerBase
         _productService = productService;
         _fileService = fileService;
     }
+
 
     [HttpGet]
     public async Task<IActionResult> Get([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
@@ -47,6 +50,7 @@ public class ProductController : ControllerBase
         }
     }
 
+
     [HttpGet("{id:guid}")]
     public IActionResult Get([FromRoute] Guid id)
     {
@@ -62,6 +66,7 @@ public class ProductController : ControllerBase
             return BadRequest(new ValidationResultModel(400, errors));
         }
     }
+
 
     [HttpGet("{description}")]
     public IActionResult Get([FromRoute] string description)
@@ -129,6 +134,7 @@ public class ProductController : ControllerBase
         return Ok(detail);
     }
 
+
     [HttpPut]
     public IActionResult Put([FromBody] ProductPutViewModel productViewModel)
     {
@@ -151,8 +157,10 @@ public class ProductController : ControllerBase
         }
 
     }
+    
 
     [HttpDelete("{id:guid}")]
+    [Authorize(Roles = "Manager")]
     public IActionResult Delete([FromRoute] Guid id)
     {
         try
@@ -169,6 +177,7 @@ public class ProductController : ControllerBase
         }
     }
     
+
     [HttpDelete("file/{id:guid}")]
     public IActionResult DeleteFile([FromRoute] Guid id)
     {

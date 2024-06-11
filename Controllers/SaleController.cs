@@ -4,10 +4,12 @@ using SalesCrud.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using SalesCrud.Model;
 using SalesCrud.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SalesCrud.Controllers;
 [Route("api/[controller]")]
 [ApiController]
+[Authorize]
 public class SaleController : ControllerBase
 {
     private readonly ISaleService _saleService;
@@ -43,6 +45,7 @@ public class SaleController : ControllerBase
         }
     }
 
+
     [HttpGet("{id:guid}")]
     public IActionResult Get([FromRoute] Guid id)
     {
@@ -58,6 +61,7 @@ public class SaleController : ControllerBase
             return BadRequest(new ValidationResultModel(400, errors));
         }
     }
+
 
     [HttpGet("{nameOrDescription}")]
     public IActionResult Get([FromRoute] string nameOrDescription)
@@ -105,6 +109,7 @@ public class SaleController : ControllerBase
         }
     }
 
+
     [HttpPut]
     public IActionResult Put([FromBody] SalePutViewModel saleViewModel)
     {
@@ -130,6 +135,7 @@ public class SaleController : ControllerBase
 
 
     [HttpDelete("{id:guid}")]
+    [Authorize(Roles = "Manager")]
     public IActionResult Delete([FromRoute] Guid id)
     {
         try

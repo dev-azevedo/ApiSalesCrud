@@ -3,10 +3,12 @@ using SalesCrud.Services.Interfaces;
 using SalesCrud.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using SalesCrud.Enums;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SalesCrud.Controllers;
 [Route("api/[controller]")]
 [ApiController]
+[Authorize]
 public class ClientController : ControllerBase
 {
     private readonly IClientService _clientService;
@@ -44,6 +46,7 @@ public class ClientController : ControllerBase
         }
     }
 
+
     [HttpGet("{id:guid}")]
     public IActionResult Get([FromRoute] Guid id)
     {
@@ -60,6 +63,7 @@ public class ClientController : ControllerBase
         }
     }
 
+
     [HttpGet("{name}")]
     public IActionResult Get([FromRoute] string name)
     {
@@ -75,6 +79,7 @@ public class ClientController : ControllerBase
             return BadRequest(new ValidationResultModel(400, errors));
         }
     }
+
 
     [HttpGet("bestSeller")]
     public async Task<IActionResult> GetBestSeller()
@@ -95,6 +100,7 @@ public class ClientController : ControllerBase
             return BadRequest(new ValidationResultModel(400, errors));
         }
     }
+
 
     [HttpPost]
     public IActionResult Post([FromBody] ClientPostViewModel clientViewModel)
@@ -123,6 +129,7 @@ public class ClientController : ControllerBase
         }
     }
 
+
     [HttpPost("file")]
     public async Task<IActionResult> PostFile([FromForm] FilePostViewModel fileViewModel)
     { 
@@ -150,6 +157,7 @@ public class ClientController : ControllerBase
         return Ok(detail);
     } 
 
+
     [HttpPut]
     public IActionResult Put([FromBody] ClientPutViewModel clientViewModel)
     {
@@ -173,6 +181,7 @@ public class ClientController : ControllerBase
 
     }
 
+
     [HttpDelete("{id:guid}")]
     public IActionResult Delete([FromRoute] Guid id)
     {
@@ -189,7 +198,9 @@ public class ClientController : ControllerBase
         }
     }
 
-     [HttpDelete("file/{id:guid}")]
+
+    [HttpDelete("file/{id:guid}")]
+    [Authorize(Roles = "Manager")]
     public IActionResult DeleteFile([FromRoute] Guid id)
     {
         try
