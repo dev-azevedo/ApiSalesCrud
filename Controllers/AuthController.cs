@@ -1,9 +1,11 @@
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 using ApiSalesCrud.ViewModel;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using SalesCrud.Exceptions;
-using System.Security.Claims;
 
 namespace ApiSalesCrud.Controllers;
 
@@ -13,14 +15,17 @@ public class AuthController : ControllerBase
 {
     private readonly UserManager<IdentityUser> _userManager;
     private readonly SignInManager<IdentityUser> _signInManager;
+    private readonly IConfiguration _configuration;
 
     public AuthController(
         UserManager<IdentityUser> userManager,
-        SignInManager<IdentityUser> signInManager
+        SignInManager<IdentityUser> signInManager,
+        IConfiguration configuration
     )
     {
         _userManager = userManager;
         _signInManager = signInManager;
+        _configuration = configuration;
     }
 
     [HttpPost("register")]
@@ -58,7 +63,10 @@ public class AuthController : ControllerBase
             {
                 await _userManager.AddToRoleAsync(user, model.UserRole.ToString());
                 await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Name, model.FullName));
-                await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.DateOfBirth, model.DateOfBirth.ToString()));
+                await _userManager.AddClaimAsync(
+                    user,
+                    new Claim(ClaimTypes.DateOfBirth, model.DateOfBirth.ToString())
+                );
 
                 return Ok("Usuário criado com sucesso");
             }
@@ -86,6 +94,18 @@ public class AuthController : ControllerBase
             return BadRequest(ModelState);
         }
 
+        var user = await _userManager.FindByEmailAsync(model.Email);
+
+        if (user == null)
+        {
+            return Unauthorized(
+                new ValidationResultModel(
+                    401,
+                    new List<ValidationError> { new("Usuário não autenticado") }
+                )
+            );
+        }
+
         try
         {
             var result = await _signInManager.PasswordSignInAsync(
@@ -94,16 +114,32 @@ public class AuthController : ControllerBase
                 false,
                 false
             );
-            if (result.Succeeded)
+
+            if (!result.Succeeded)
             {
-                return Ok("Usuário autenticado com sucesso");
+                return Unauthorized(
+                    new ValidationResultModel(
+                        401,
+                        new List<ValidationError> { new("Usuário não autenticado") }
+                    )
+                );
             }
 
-            return Unauthorized(
-                new ValidationResultModel(
-                    401,
-                    new List<ValidationError> { new("Usuário não autenticado") }
-                )
+            var token = GenereteToken(user);
+
+            var claims = await _userManager.GetClaimsAsync(user);
+
+            var fullNameClaim = claims.FirstOrDefault(c => c.Type == ClaimTypes.Name);
+            var fullName = fullNameClaim?.Value;
+
+            return Ok(
+                new
+                {
+                    token,
+                    fullName,
+                    Id = user.Id,
+                    Email = user.Email
+                }
             );
         }
         catch (Exception ex)
@@ -111,5 +147,29 @@ public class AuthController : ControllerBase
             var errors = new List<ValidationError> { new(ex.Message) };
             return BadRequest(new ValidationResultModel(400, errors));
         }
+    }
+
+    private string GenereteToken(IdentityUser user)
+    {
+        var tokenHandler = new JwtSecurityTokenHandler();
+        var key = Encoding.ASCII.GetBytes(_configuration["Jwt:SecretKey"]);
+        var tokenDescriptor = new SecurityTokenDescriptor
+        {
+            Subject = new ClaimsIdentity(
+                new Claim[]
+                {
+                    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                    new Claim(ClaimTypes.Email, user.Email),
+                }
+            ),
+            Expires = DateTime.UtcNow.AddDays(2),
+            SigningCredentials = new SigningCredentials(
+                new SymmetricSecurityKey(key),
+                SecurityAlgorithms.HmacSha256Signature
+            )
+        };
+
+        var token = tokenHandler.CreateToken(tokenDescriptor);
+        return tokenHandler.WriteToken(token);
     }
 }
