@@ -14,9 +14,10 @@ public class ClientController : ControllerBase
     private readonly IClientService _clientService;
     private readonly IFileService _fileService;
 
-    public ClientController(IClientService clientService)
+    public ClientController(IClientService clientService, IFileService fileService)
     {
         _clientService = clientService;
+        _fileService = fileService;
     }
 
     [HttpGet]
@@ -132,7 +133,7 @@ public class ClientController : ControllerBase
             return BadRequest("Invalid file");
         }
 
-        FileViewModel detail = await _fileService.SaveFile(fileViewModel.File, fileViewModel.Id, EDestinationFile.Product);
+        FileViewModel detail = await _fileService.SaveFile(fileViewModel.File, fileViewModel.Id, EDestinationFile.Client);
 
         var client = _clientService.FindById(fileViewModel.Id);
 
@@ -180,6 +181,36 @@ public class ClientController : ControllerBase
         try
         {
             _clientService.Delete(id);
+            return NoContent();
+        }
+        catch (Exception ex)
+        {
+            var errors = new List<ValidationError> { new(ex.Message) };
+
+            return BadRequest(new ValidationResultModel(400, errors));
+        }
+    }
+
+     [HttpDelete("file/{id:guid}")]
+    public IActionResult DeleteFile([FromRoute] Guid id)
+    {
+        try
+        {
+            _fileService.DeleteFile(id, EDestinationFile.Client);
+
+            var client = _clientService.FindById(id);
+
+
+            ClientPutViewModel updateClient = new ClientPutViewModel
+            {
+                Id = id,
+                Name = client.Name,
+                Email = client.Email,
+                City = client.City,
+                PathImage = null
+            };
+
+            _clientService.Updated(updateClient);
             return NoContent();
         }
         catch (Exception ex)

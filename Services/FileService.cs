@@ -41,8 +41,8 @@ public class FileService : IFileService
         };
     }
 
-    public async Task<FileViewModel> SaveFile(IFormFile file, Guid ProductId, EDestinationFile destinationFile)
-        {
+    public async Task<FileViewModel> SaveFile(IFormFile file, Guid id, EDestinationFile destinationFile)
+    {
         FileViewModel fileDetail = new();
 
         var fileSavePath = Path.Combine(_basePath, destinationFile.ToString());
@@ -59,7 +59,7 @@ public class FileService : IFileService
 
         if (fileTypes.Contains(fileType.ToLower()))
         {
-            var fileName = $"{ProductId}{fileType}";
+            var fileName = $"{id}{fileType}";
             if ((file != null && file.Length > 0))
             {
                 var destination = Path.Combine(fileSavePath, "", fileName);
@@ -72,7 +72,7 @@ public class FileService : IFileService
 
                 fileDetail.Name = fileName;
                 fileDetail.Type = fileType;
-                fileDetail.Url = $"{baseUrl}/api/file/{destinationFile.GetHashCode()}/{ProductId}";
+                fileDetail.Url = $"{baseUrl}/api/file/{destinationFile.GetHashCode()}/{id}";
 
                 using var stream = new FileStream(destination, FileMode.Create);
                 await file.CopyToAsync(stream);
@@ -83,14 +83,14 @@ public class FileService : IFileService
     }
 
 
-    public void DeleteFile(Guid productId, EDestinationFile destinationFile)
+    public void DeleteFile(Guid id, EDestinationFile destinationFile)
     {
-        if (productId == Guid.Empty)
+        if (id == Guid.Empty)
         {
-            throw new ArgumentException("Invalid productId", nameof(productId));
+            throw new ArgumentException("Invalid productId", nameof(id));
         }
 
-        var searchPattern = $"{productId}.*";
+        var searchPattern = $"{id}.*";
         var fileSavePath = Path.Combine(_basePath, destinationFile.ToString());
 
         if(!Directory.Exists(fileSavePath))
@@ -122,18 +122,18 @@ public class FileService : IFileService
         };
     }
 
-    public string GetFilePath(EDestinationFile destinationFile, Guid ProductId)
+    public string GetFilePath(EDestinationFile destinationFile, Guid id)
     {
         var directoryPath = Path.Combine(_basePath, destinationFile.ToString());
 
         if (Directory.Exists(directoryPath))
         {
-            var files = Directory.GetFiles(directoryPath, $"{ProductId}*");
+            var files = Directory.GetFiles(directoryPath, $"{id}*");
 
             if (files.Length > 0)
             {
                 var baseUrl = $"{_context.HttpContext.Request.Scheme}://{_context.HttpContext.Request.Host}{_context.HttpContext.Request.PathBase}";
-                var filePath = $"{baseUrl}/api/file/{destinationFile.GetHashCode()}/{ProductId}";
+                var filePath = $"{baseUrl}/api/file/{destinationFile.GetHashCode()}/{id}";
                 return filePath;
             }
 
