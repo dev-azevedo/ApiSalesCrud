@@ -28,6 +28,7 @@ public class ClientPutViewModel
 
     [Required(ErrorMessage = "O campo cidade é obrigatório.")]
     public string City { get; set; }
+    public string PathImage { get; set; }
 }
 
 public class ClientRespViewModel {
@@ -35,5 +36,6 @@ public class ClientRespViewModel {
     public string Name { get; set; }
     public string Email { get; set; }
     public string City { get; set; }
+    public string PathImage { get; set; }
 }
 

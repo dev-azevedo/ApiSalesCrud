@@ -11,7 +11,7 @@ public class FileViewModel
 
 public class FilePostViewModel
 {
-    public Guid ProductId { get; set; }
+    public Guid Id { get; set; }
     public IFormFile File { get; set; }
 }
 

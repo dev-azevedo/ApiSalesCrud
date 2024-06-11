@@ -111,14 +111,14 @@ public class ProductController : ControllerBase
             return BadRequest("Invalid file");
         }
 
-        FileViewModel detail = await _fileService.SaveFile(fileViewModel.File, fileViewModel.ProductId, EDestinationFile.Product);
+        FileViewModel detail = await _fileService.SaveFile(fileViewModel.File, fileViewModel.Id, EDestinationFile.Product);
 
-        var product = _productService.FindById(fileViewModel.ProductId);
+        var product = _productService.FindById(fileViewModel.Id);
 
 
         ProductPutViewModel updateProduct = new ProductPutViewModel
         {
-            Id = fileViewModel.ProductId,
+            Id = fileViewModel.Id,
             Description = product.Description,
             UnitaryValue = product.UnitaryValue,
             PathImage = detail.Url

@@ -4,6 +4,7 @@ using SalesCrud.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using SalesCrud.Model;
 using SalesCrud.Services;
+using SalesCrud.Services.Enums;
 
 namespace SalesCrud.Controllers;
 [Route("api/[controller]")]
@@ -11,6 +12,7 @@ namespace SalesCrud.Controllers;
 public class ClientController : ControllerBase
 {
     private readonly IClientService _clientService;
+    private readonly IFileService _fileService;
 
     public ClientController(IClientService clientService)
     {
@@ -121,6 +123,33 @@ public class ClientController : ControllerBase
             return BadRequest(new ValidationResultModel(400, errors));
         }
     }
+
+    [HttpPost("file")]
+    public async Task<IActionResult> PostFile([FromForm] FilePostViewModel fileViewModel)
+    { 
+          if (fileViewModel.File == null || fileViewModel.File.Length == 0)
+        {
+            return BadRequest("Invalid file");
+        }
+
+        FileViewModel detail = await _fileService.SaveFile(fileViewModel.File, fileViewModel.Id, EDestinationFile.Product);
+
+        var client = _clientService.FindById(fileViewModel.Id);
+
+
+        ClientPutViewModel updateClient = new ClientPutViewModel
+        {
+            Id = fileViewModel.Id,
+            Name = client.Name,
+            Email = client.Email,
+            City = client.City,
+            PathImage = detail.Url
+        };
+
+        _clientService.Updated(updateClient);
+
+        return Ok(detail);
+    } 
 
     [HttpPut]
     public IActionResult Put([FromBody] ClientPutViewModel clientViewModel)
