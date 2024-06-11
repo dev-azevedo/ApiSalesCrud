@@ -18,7 +18,14 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
+builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
+{
+    options.SignIn.RequireConfirmedEmail = false;
+    options.SignIn.RequireConfirmedAccount = false;
+    options.User.RequireUniqueEmail = true;
+})
+.AddEntityFrameworkStores<AppDbContext>()
+.AddDefaultTokenProviders();
 
 builder.Services.AddAuthorization();
 
@@ -84,6 +91,5 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapControllers();
-app.MapIdentityApi<IdentityUser>();
 
 app.Run();
