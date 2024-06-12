@@ -6,17 +6,17 @@ using SalesCrud.Model;
 
 namespace SalesCrud.Infra;
 
-public class AppDbContext : IdentityDbContext<IdentityUser>
+public class AppDbContext : IdentityDbContext<IdentityUser, IdentityRole, string>
 {
-    private readonly RoleManager<IdentityRole> _roleManager;
 
     public DbSet<Sale> Sales { get; set; }
     public DbSet<Client> Clients { get; set; }
     public DbSet<Product> Products { get; set; }
-
+    
     public AppDbContext(DbContextOptions<AppDbContext> options)
         : base(options) { }
 
+    
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         if (!optionsBuilder.IsConfigured)
@@ -98,16 +98,5 @@ public class AppDbContext : IdentityDbContext<IdentityUser>
             .HasOne(s => s.Product)
             .WithMany(p => p.Sales)
             .HasForeignKey(s => s.ProductId);
-    }
-
-    protected async Task InitializeRoles()
-    {
-        foreach (var roleName in Enum.GetNames(typeof(ERoleUser)))
-        {
-            if (!await _roleManager.RoleExistsAsync(roleName))
-            {
-                await _roleManager.CreateAsync(new IdentityRole(roleName));
-            }
-        }
     }
 }

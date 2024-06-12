@@ -20,7 +20,7 @@ using SalesCrud.Services.Interfaces;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlite(builder.Configuration["ConnectionStrings:ConnectionSqLite"])
+    options.UseSqlite(builder.Configuration.GetConnectionString("ConnectionSqLite"))
 );
 
 builder.Services.AddControllers();
@@ -68,7 +68,8 @@ builder
     .AddEntityFrameworkStores<AppDbContext>()
     .AddDefaultTokenProviders();
 
-builder.Services.AddScoped<RoleManager<IdentityRole>>();
+
+builder.Services.AddSingleton<IHostedService, RoleInitializer>();
 
 #region JWT
 var tokenConfiguration = new TokenConfiguration();
@@ -89,8 +90,8 @@ builder
     {
         options.TokenValidationParameters = new TokenValidationParameters
         {
-            ValidateIssuer = true,
-            ValidateAudience = true,
+            ValidateIssuer = false,
+            ValidateAudience = false,
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
             ValidIssuer = tokenConfiguration.Issuer,
