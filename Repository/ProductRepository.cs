@@ -1,7 +1,6 @@
 ﻿using SalesCrud.Infra;
 using SalesCrud.Model;
 using SalesCrud.Repository.Interfaces;
-using System.Xml.Linq;
 
 namespace SalesCrud.Repository;
 

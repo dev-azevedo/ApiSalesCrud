@@ -1,6 +1,4 @@
-﻿using System.Runtime.Serialization;
-
-namespace SalesCrud.Exceptions;
+﻿namespace SalesCrud.Exceptions;
 [Serializable]
 internal class DomainException : Exception
 {

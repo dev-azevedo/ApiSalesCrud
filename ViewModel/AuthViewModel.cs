@@ -1,7 +1,7 @@
-using ApiSalesCrud.Enums;
+using SalesCrud.Enums;
 using System.ComponentModel.DataAnnotations;
 
-namespace ApiSalesCrud.ViewModel;
+namespace SalesCrud.ViewModel;
 
 public class AuthRegisterViewModel {
 

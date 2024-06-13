@@ -1,5 +1,4 @@
 using System.Text;
-using ApiSalesCrud.Configurations;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -9,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using SalesCrud.Configurations;
 using SalesCrud.AutoMapper;
 using SalesCrud.Exceptions;
 using SalesCrud.Infra;
@@ -124,6 +124,8 @@ builder
     );
 #endregion
 
+
+#region DI
 builder.Services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
@@ -134,11 +136,14 @@ builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IClientService, ClientService>();
 builder.Services.AddScoped<ISaleService, SaleService>();
 builder.Services.AddScoped<IFileService, FileService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
 
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+#endregion
 
 builder.Services.AddAutoMapper(typeof(AutoMapperConfig));
 
+#region PostConfigure
 builder.Services.PostConfigure<ApiBehaviorOptions>(options =>
 {
     options.InvalidModelStateResponseFactory = actionContext =>
@@ -155,6 +160,7 @@ builder.Services.PostConfigure<ApiBehaviorOptions>(options =>
         return new BadRequestObjectResult(model);
     };
 });
+#endregion
 
 var app = builder.Build();
 

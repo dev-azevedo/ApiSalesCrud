@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
 using SalesCrud.Exceptions;
 using SalesCrud.Model;
 using SalesCrud.Repository.Interfaces;

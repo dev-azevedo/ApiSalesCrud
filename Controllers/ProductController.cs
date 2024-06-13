@@ -2,14 +2,13 @@
 using SalesCrud.Services.Interfaces;
 using SalesCrud.ViewModel;
 using Microsoft.AspNetCore.Mvc;
-using SalesCrud.Services;
 using SalesCrud.Enums;
 using Microsoft.AspNetCore.Authorization;
 
 namespace SalesCrud.Controllers;
+[Authorize]
 [Route("api/[controller]")]
 [ApiController]
-[Authorize]
 public class ProductController : ControllerBase
 {
 
@@ -23,6 +22,7 @@ public class ProductController : ControllerBase
     }
 
 
+    [AllowAnonymous]
     [HttpGet]
     public async Task<IActionResult> Get([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
     {

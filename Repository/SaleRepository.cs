@@ -2,7 +2,6 @@
 using SalesCrud.Model;
 using SalesCrud.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System.Xml.Linq;
 
 namespace SalesCrud.Repository;
 

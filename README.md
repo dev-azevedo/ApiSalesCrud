@@ -19,7 +19,7 @@ The main frameworks/libraries used in the project
 To clone and run this application, you'll need Git and Node.js (which comes with npm) installed on your computer. From your command line:
 
 ```bash
-  git clone https://github.com/dev-azevedo/ApiSalesCrud.git
+  git clone https://github.com/dev-azevedo/SalesCrudgit
 ```
 
 Go to the project directory

@@ -1,11 +1,7 @@
-using System;
-using System.Threading.Tasks;
-using ApiSalesCrud.Enums;
+using SalesCrud.Enums;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 
-namespace ApiSalesCrud.Configurations;
+namespace SalesCrud.Configurations;
 
 public class RoleInitializer : IHostedService
 {

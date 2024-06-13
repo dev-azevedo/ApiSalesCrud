@@ -2,8 +2,6 @@
 using SalesCrud.Services.Interfaces;
 using SalesCrud.ViewModel;
 using Microsoft.AspNetCore.Mvc;
-using SalesCrud.Model;
-using SalesCrud.Services;
 using Microsoft.AspNetCore.Authorization;
 
 namespace SalesCrud.Controllers;
@@ -19,6 +17,8 @@ public class SaleController : ControllerBase
         _saleService = saleService;
     }
 
+    
+    [AllowAnonymous]
     [HttpGet]
     public async Task<IActionResult> Get([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
     {

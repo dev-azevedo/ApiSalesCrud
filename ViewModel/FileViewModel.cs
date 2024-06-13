@@ -1,6 +1,4 @@
-﻿using SalesCrud.Enums;
-
-namespace SalesCrud.ViewModel;
+﻿namespace SalesCrud.ViewModel;
 
 public class FileViewModel
 {

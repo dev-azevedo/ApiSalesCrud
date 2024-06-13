@@ -1,14 +1,14 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using ApiSalesCrud.ViewModel;
-using Microsoft.AspNetCore.Authorization;
+using SalesCrud.ViewModel;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using SalesCrud.Exceptions;
+using SalesCrud.Services.Interfaces;
 
-namespace ApiSalesCrud.Controllers;
+namespace SalesCrud.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -17,16 +17,18 @@ public class AuthController : ControllerBase
     private readonly UserManager<IdentityUser> _userManager;
     private readonly SignInManager<IdentityUser> _signInManager;
     private readonly IConfiguration _configuration;
+    private readonly IAuthService _authService;
 
     public AuthController(
         UserManager<IdentityUser> userManager,
         SignInManager<IdentityUser> signInManager,
-        IConfiguration configuration
-    )
+        IConfiguration configuration,
+        IAuthService authService)
     {
         _userManager = userManager;
         _signInManager = signInManager;
         _configuration = configuration;
+        _authService = authService;
     }
 
     [HttpPost("register")]
@@ -36,55 +38,18 @@ public class AuthController : ControllerBase
         {
             var errors = new List<ValidationError>();
             foreach (var modelState in ModelState.Values)
-            {
                 foreach (var error in modelState.Errors)
-                {
                     errors.Add(new ValidationError(error.ErrorMessage));
-                }
-            }
-            return BadRequest(new ValidationResultModel(400, errors));
-        }
-
-        if (model.Password != model.ConfirmPassword)
-        {
-            return BadRequest(
-                new ValidationResultModel(
-                    401,
-                    new List<ValidationError> { new("As senhas não coincidem") }
-                )
-            );
-        }
-
-        try
-        {
-            var user = new IdentityUser { UserName = model.Email, Email = model.Email };
-            var result = await _userManager.CreateAsync(user, model.Password);
-
-            if (result.Succeeded)
-            {
-                await _userManager.AddToRoleAsync(user, model.UserRole.ToString());
-                await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Name, model.FullName));
-                await _userManager.AddClaimAsync(
-                    user,
-                    new Claim(ClaimTypes.DateOfBirth, model.DateOfBirth.ToString())
-                );
-
-                return Ok("Usuário criado com sucesso");
-            }
-
-            var errors = new List<ValidationError>();
-            foreach (var error in result.Errors)
-            {
-                errors.Add(new ValidationError(error.Description));
-            }
 
             return BadRequest(new ValidationResultModel(400, errors));
         }
-        catch (Exception ex)
-        {
-            var errors = new List<ValidationError> { new(ex.Message) };
-            return BadRequest(new ValidationResultModel(400, errors));
-        }
+
+        var result = await _authService.Register(model);
+
+         if (result.Status == 200)
+            return Ok("Usuário criado com sucesso");
+
+        return BadRequest(result);
     }
 
     [HttpPost("login")]

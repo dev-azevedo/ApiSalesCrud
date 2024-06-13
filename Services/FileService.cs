@@ -1,5 +1,4 @@
-﻿using SalesCrud.Model;
-using SalesCrud.Enums;
+﻿using SalesCrud.Enums;
 using SalesCrud.Services.Interfaces;
 using SalesCrud.ViewModel;
 

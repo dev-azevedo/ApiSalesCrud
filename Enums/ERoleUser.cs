@@ -1,4 +1,4 @@
-namespace ApiSalesCrud.Enums
+namespace SalesCrud.Enums
 {
     public enum ERoleUser
     {

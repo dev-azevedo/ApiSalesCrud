@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-namespace SalesCrud.Model;
+﻿namespace SalesCrud.Model;
 
 public class Sale : BaseModel
 {

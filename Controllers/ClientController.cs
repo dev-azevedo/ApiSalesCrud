@@ -1,11 +1,12 @@
-﻿using SalesCrud.Exceptions;
-using SalesCrud.Services.Interfaces;
-using SalesCrud.ViewModel;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SalesCrud.Enums;
-using Microsoft.AspNetCore.Authorization;
+using SalesCrud.Exceptions;
+using SalesCrud.Services.Interfaces;
+using SalesCrud.ViewModel;
 
 namespace SalesCrud.Controllers;
+
 [Authorize]
 [Route("api/[controller]")]
 [ApiController]
@@ -20,8 +21,12 @@ public class ClientController : ControllerBase
         _fileService = fileService;
     }
 
+    [AllowAnonymous]
     [HttpGet]
-    public async Task<IActionResult> Get([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
+    public async Task<IActionResult> Get(
+        [FromQuery] int pageNumber = 1,
+        [FromQuery] int pageSize = 10
+    )
     {
         try
         {
@@ -31,12 +36,11 @@ public class ClientController : ControllerBase
                 PageNumber = pageNumber,
                 PageSize = pageSize,
                 TotalItems = totalItems,
-                TotalPages = (int)Math.Ceiling(totalItems/ (double)pageSize),
+                TotalPages = (int)Math.Ceiling(totalItems / (double)pageSize),
                 Items = clients
             };
 
             return Ok(response);
-
         }
         catch (Exception ex)
         {
@@ -45,7 +49,6 @@ public class ClientController : ControllerBase
             return BadRequest(new ValidationResultModel(400, errors));
         }
     }
-
 
     [HttpGet("{id:guid}")]
     public IActionResult Get([FromRoute] Guid id)
@@ -63,7 +66,6 @@ public class ClientController : ControllerBase
         }
     }
 
-
     [HttpGet("{name}")]
     public IActionResult Get([FromRoute] string name)
     {
@@ -80,18 +82,16 @@ public class ClientController : ControllerBase
         }
     }
 
-
+    [AllowAnonymous]
     [HttpGet("bestSeller")]
     public async Task<IActionResult> GetBestSeller()
     {
         try
         {
             var topThreeClients = await _clientService.FindBestSeller();
-            return Ok(topThreeClients.Select(c => new
-            {
-                Client = c.Item1,
-                SaleCount = c.Item2,
-            }).ToList());
+            return Ok(
+                topThreeClients.Select(c => new { Client = c.Item1, SaleCount = c.Item2, }).ToList()
+            );
         }
         catch (Exception ex)
         {
@@ -100,7 +100,6 @@ public class ClientController : ControllerBase
             return BadRequest(new ValidationResultModel(400, errors));
         }
     }
-
 
     [HttpPost]
     public IActionResult Post([FromBody] ClientPostViewModel clientViewModel)
@@ -129,19 +128,21 @@ public class ClientController : ControllerBase
         }
     }
 
-
     [HttpPost("file")]
     public async Task<IActionResult> PostFile([FromForm] FilePostViewModel fileViewModel)
-    { 
-          if (fileViewModel.File == null || fileViewModel.File.Length == 0)
+    {
+        if (fileViewModel.File == null || fileViewModel.File.Length == 0)
         {
             return BadRequest("Invalid file");
         }
 
-        FileViewModel detail = await _fileService.SaveFile(fileViewModel.File, fileViewModel.Id, EDestinationFile.Client);
+        FileViewModel detail = await _fileService.SaveFile(
+            fileViewModel.File,
+            fileViewModel.Id,
+            EDestinationFile.Client
+        );
 
         var client = _clientService.FindById(fileViewModel.Id);
-
 
         ClientPutViewModel updateClient = new ClientPutViewModel
         {
@@ -155,8 +156,7 @@ public class ClientController : ControllerBase
         _clientService.Updated(updateClient);
 
         return Ok(detail);
-    } 
-
+    }
 
     [HttpPut]
     public IActionResult Put([FromBody] ClientPutViewModel clientViewModel)
@@ -174,13 +174,11 @@ public class ClientController : ControllerBase
         }
         catch (Exception ex)
         {
-            var errors = new List<ValidationError>{ new (ex.Message)};
+            var errors = new List<ValidationError> { new(ex.Message) };
 
             return BadRequest(new ValidationResultModel(400, errors));
         }
-
     }
-
 
     [HttpDelete("{id:guid}")]
     public IActionResult Delete([FromRoute] Guid id)
@@ -198,7 +196,6 @@ public class ClientController : ControllerBase
         }
     }
 
-
     [HttpDelete("file/{id:guid}")]
     [Authorize(Roles = "Manager")]
     public IActionResult DeleteFile([FromRoute] Guid id)
@@ -208,7 +205,6 @@ public class ClientController : ControllerBase
             _fileService.DeleteFile(id, EDestinationFile.Client);
 
             var client = _clientService.FindById(id);
-
 
             ClientPutViewModel updateClient = new ClientPutViewModel
             {
