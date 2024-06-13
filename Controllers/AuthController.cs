@@ -70,7 +70,7 @@ public class AuthController : ControllerBase
         var user = await _authService.SignIn(model);
 
         if (user == null)
-            return Unauthorized(new ValidationResultModel(401, [new("Usuário não autenticado")]));
+            return BadRequest(new ValidationResultModel(401, [new("Email e/ou senha incorreto.")]));
 
         return Ok(user);
     }
