@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SalesCrud.ViewModel;
 
-public class AuthRegisterViewModel {
+public class AuthSignUprViewModel {
 
     [Required(ErrorMessage = "O campo email é obrigatório.")]
     [DataType(DataType.EmailAddress)]
@@ -29,7 +29,7 @@ public class AuthRegisterViewModel {
     public ERoleUser UserRole { get; set; }
  }
 
- public class AuthLoginViewModel {
+ public class AuthSignInViewModel {
     [Required(ErrorMessage = "O campo email é obrigatório.")]
     [DataType(DataType.EmailAddress)]
     public string Email { get; set; }
@@ -37,4 +37,11 @@ public class AuthRegisterViewModel {
     [Required(ErrorMessage = "O campo senha é obrigatório.")]
     [DataType(DataType.Password)]
     public string Password { get; set; }
+ }
+
+  public class AuthSignInRespViewModel {
+    public string Id { get; set; }
+    public string FullName { get; set; }
+    public string Email { get; set; }
+    public string Token { get; set; }
  }

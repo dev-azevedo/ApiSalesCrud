@@ -1,12 +1,12 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using SalesCrud.ViewModel;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using SalesCrud.Exceptions;
 using SalesCrud.Services.Interfaces;
+using SalesCrud.ViewModel;
 
 namespace SalesCrud.Controllers;
 
@@ -23,7 +23,8 @@ public class AuthController : ControllerBase
         UserManager<IdentityUser> userManager,
         SignInManager<IdentityUser> signInManager,
         IConfiguration configuration,
-        IAuthService authService)
+        IAuthService authService
+    )
     {
         _userManager = userManager;
         _signInManager = signInManager;
@@ -31,8 +32,8 @@ public class AuthController : ControllerBase
         _authService = authService;
     }
 
-    [HttpPost("register")]
-    public async Task<IActionResult> Register([FromBody] AuthRegisterViewModel model)
+    [HttpPost("signup")]
+    public async Task<IActionResult> Register([FromBody] AuthSignUprViewModel model)
     {
         if (!ModelState.IsValid)
         {
@@ -46,73 +47,32 @@ public class AuthController : ControllerBase
 
         var result = await _authService.Register(model);
 
-         if (result.Status == 200)
+        if (result.Status == 200)
             return Ok("Usuário criado com sucesso");
 
         return BadRequest(result);
     }
 
-    [HttpPost("login")]
-    public async Task<IActionResult> Login([FromBody] AuthLoginViewModel model)
+    [HttpPost("signin")]
+    public async Task<IActionResult> Login([FromBody] AuthSignInViewModel model)
     {
-        if (!ModelState.IsValid)
+         if (!ModelState.IsValid)
         {
-            return BadRequest(ModelState);
-        }
+            var errors = new List<ValidationError>();
+            foreach (var modelState in ModelState.Values)
+                foreach (var error in modelState.Errors)
+                    errors.Add(new ValidationError(error.ErrorMessage));
 
-        var user = await _userManager.FindByEmailAsync(model.Email);
-
-        if (user == null)
-        {
-            return Unauthorized(
-                new ValidationResultModel(
-                    401,
-                    new List<ValidationError> { new("Usuário não autenticado") }
-                )
-            );
-        }
-
-        try
-        {
-            var result = await _signInManager.PasswordSignInAsync(
-                model.Email,
-                model.Password,
-                false,
-                false
-            );
-
-            if (!result.Succeeded)
-            {
-                return Unauthorized(
-                    new ValidationResultModel(
-                        401,
-                        new List<ValidationError> { new("Usuário não autenticado") }
-                    )
-                );
-            }
-
-            var token = GenereteToken(user);
-
-            var claims = await _userManager.GetClaimsAsync(user);
-
-            var fullNameClaim = claims.FirstOrDefault(c => c.Type == ClaimTypes.Name);
-            var fullName = fullNameClaim?.Value;
-
-            return Ok(
-                new
-                {
-                    token,
-                    fullName,
-                    Id = user.Id,
-                    Email = user.Email
-                }
-            );
-        }
-        catch (Exception ex)
-        {
-            var errors = new List<ValidationError> { new(ex.Message) };
             return BadRequest(new ValidationResultModel(400, errors));
         }
+
+
+        var user = await _authService.SignIn(model);
+
+        if (user == null)
+            return Unauthorized(new ValidationResultModel(401, [new("Usuário não autenticado")]));
+
+        return Ok(user);
     }
 
     [HttpPost("validate")]
@@ -145,27 +105,5 @@ public class AuthController : ControllerBase
         }
     }
 
-    private string GenereteToken(IdentityUser user)
-    {
-        var tokenHandler = new JwtSecurityTokenHandler();
-        var key = Encoding.ASCII.GetBytes(_configuration["TokenConfigurations:SecretKey"]);
-        var tokenDescriptor = new SecurityTokenDescriptor
-        {
-            Subject = new ClaimsIdentity(
-                new Claim[]
-                {
-                    new Claim(ClaimTypes.NameIdentifier, user.Id),
-                    new Claim(ClaimTypes.Email, user.Email)
-                }
-            ),
-            Expires = DateTime.UtcNow.AddDays(2),
-            SigningCredentials = new SigningCredentials(
-                new SymmetricSecurityKey(key),
-                SecurityAlgorithms.HmacSha256Signature
-            )
-        };
-
-        var token = tokenHandler.CreateToken(tokenDescriptor);
-        return tokenHandler.WriteToken(token);
-    }
+  
 }
