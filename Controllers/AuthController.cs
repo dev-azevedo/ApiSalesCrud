@@ -33,77 +33,94 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("signup")]
-    public async Task<IActionResult> Register([FromBody] AuthSignUprViewModel model)
+    public async Task<IActionResult> SignUp([FromBody] AuthSignUprViewModel model)
     {
         if (!ModelState.IsValid)
         {
             var errors = new List<ValidationError>();
             foreach (var modelState in ModelState.Values)
-                foreach (var error in modelState.Errors)
-                    errors.Add(new ValidationError(error.ErrorMessage));
+            foreach (var error in modelState.Errors)
+                errors.Add(new ValidationError(error.ErrorMessage));
 
             return BadRequest(new ValidationResultModel(400, errors));
         }
 
-        var result = await _authService.Register(model);
+        try
+        {
+            var result = await _authService.Register(model);
 
-        if (result.Status == 200)
-            return Ok("Usuário criado com sucesso");
+            if (result.Status == 200)
+                return Ok("Usuário criado com sucesso");
 
-        return BadRequest(result);
+            return BadRequest(result);
+        }
+        catch (Exception ex)
+        {
+            var errors = new List<ValidationError> { new(ex.Message) };
+            return BadRequest(new ValidationResultModel(400, errors));
+        }
     }
 
     [HttpPost("signin")]
-    public async Task<IActionResult> Login([FromBody] AuthSignInViewModel model)
+    public async Task<IActionResult> SignIn([FromBody] AuthSignInViewModel model)
     {
-         if (!ModelState.IsValid)
+        if (!ModelState.IsValid)
         {
             var errors = new List<ValidationError>();
             foreach (var modelState in ModelState.Values)
-                foreach (var error in modelState.Errors)
-                    errors.Add(new ValidationError(error.ErrorMessage));
+            foreach (var error in modelState.Errors)
+                errors.Add(new ValidationError(error.ErrorMessage));
 
             return BadRequest(new ValidationResultModel(400, errors));
         }
 
+        try
+        {
+            var user = await _authService.SignIn(model);
 
-        var user = await _authService.SignIn(model);
+            if (user == null)
+                return BadRequest(
+                    new ValidationResultModel(401, [new("Email e/ou senha incorreto.")])
+                );
 
-        if (user == null)
-            return BadRequest(new ValidationResultModel(401, [new("Email e/ou senha incorreto.")]));
-
-        return Ok(user);
+            return Ok(user);
+        }
+        catch (Exception ex)
+        {
+            var errors = new List<ValidationError> { new(ex.Message) };
+            return BadRequest(new ValidationResultModel(400, errors));
+        }
     }
 
-    [HttpPost("validate")]
-    public IActionResult ValidateToken([FromBody] string token)
+    [HttpGet("validate")]
+    public async Task<IActionResult> ValidateToken()
     {
         var tokenHandler = new JwtSecurityTokenHandler();
         var key = Encoding.ASCII.GetBytes(_configuration["TokenConfigurations:SecretKey"]);
 
         try
         {
-            tokenHandler.ValidateToken(
-                token,
-                new TokenValidationParameters
-                {
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(key),
-                    ValidateIssuer = false,
-                    ValidateAudience = false,
-                    ValidateLifetime = true
-                },
-                out SecurityToken validatedToken
-            );
+            var authorizationHeader = Request.Headers.Authorization.ToString();
+            if (
+                string.IsNullOrEmpty(authorizationHeader)
+                || !authorizationHeader.StartsWith("Bearer ")
+            )
+               return BadRequest(new ValidationResultModel(401, [new("token inválido.")]));
+               
 
-            return Ok(new { Valid = true });
+            var token = authorizationHeader.Substring("Bearer ".Length).Trim();
+            
+            var user = await _authService.validateToken(token);
+
+            if (user == null)
+                return BadRequest();
+
+            return Ok(user);
         }
-        catch
+        catch (Exception ex)
         {
-            // Token inválido
-            return BadRequest(new ValidationResultModel(400, [new("Token inválido")]));
+            var errors = new List<ValidationError> { new(ex.Message) };
+            return BadRequest(new ValidationResultModel(400, errors));
         }
     }
-
-  
 }

@@ -22,7 +22,7 @@ public class FileService : IFileService
 
     public FileResult GetFile(EDestinationFile destinationFile, Guid productId)
     {
-        var searchPattern = $"{productId}.*"; // Padrão de busca para qualquer extensão
+        var searchPattern = $"{productId}.*"; 
         var fileSavePath = Path.Combine(_basePath, destinationFile.ToString());
         var files = Directory.GetFiles(fileSavePath, searchPattern);
 
@@ -31,7 +31,7 @@ public class FileService : IFileService
             return null;
         }
 
-        var filePath = files[0]; // Pega o primeiro arquivo encontrado
+        var filePath = files[0];
 
         return new FileResult
         {
