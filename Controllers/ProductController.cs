@@ -121,7 +121,7 @@ public class ProductController : ControllerBase
         var product = _productService.FindById(fileViewModel.Id);
 
 
-        ProductPutViewModel updateProduct = new ProductPutViewModel
+        ProductPutViewModel updateProduct = new()
         {
             Id = fileViewModel.Id,
             Description = product.Description,
