@@ -106,7 +106,9 @@ public class ClientController : ControllerBase
     {
         if (!ModelState.IsValid)
         {
-            return BadRequest(clientViewModel);
+            var errors = ModelState.Keys.SelectMany(key => ModelState[key].Errors.Select(x => new ValidationError(x.ErrorMessage))).ToList();
+
+            return BadRequest(new ValidationResultModel(400, errors));
         }
 
         try
@@ -153,7 +155,7 @@ public class ClientController : ControllerBase
             PathImage = detail.Url
         };
 
-        _clientService.Updated(updateClient);
+        Put(updateClient);
 
         return Ok(detail);
     }
@@ -161,6 +163,13 @@ public class ClientController : ControllerBase
     [HttpPut]
     public IActionResult Put([FromBody] ClientPutViewModel clientViewModel)
     {
+        if (!ModelState.IsValid)
+        {
+            var errors = ModelState.Keys.SelectMany(key => ModelState[key].Errors.Select(x => new ValidationError(x.ErrorMessage))).ToList();
+
+            return BadRequest(new ValidationResultModel(400, errors));
+        }
+
         try
         {
             _clientService.Updated(clientViewModel);

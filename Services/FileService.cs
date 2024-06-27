@@ -20,9 +20,9 @@ public class FileService : IFileService
         }
     }
 
-    public FileResult GetFile(EDestinationFile destinationFile, Guid productId)
+    public FileResult GetFile(EDestinationFile destinationFile, Guid id)
     {
-        var searchPattern = $"{productId}.*"; 
+        var searchPattern = $"{id}.*"; 
         var fileSavePath = Path.Combine(_basePath, destinationFile.ToString());
         var files = Directory.GetFiles(fileSavePath, searchPattern);
 
