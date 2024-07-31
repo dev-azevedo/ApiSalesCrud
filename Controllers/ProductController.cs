@@ -67,7 +67,7 @@ public class ProductController : ControllerBase
         }
     }
 
-
+    [AllowAnonymous]
     [HttpGet("{description}")]
     public IActionResult Get([FromRoute] string description)
     {

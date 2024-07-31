@@ -66,6 +66,7 @@ public class ClientController : ControllerBase
         }
     }
 
+    [AllowAnonymous]
     [HttpGet("{name}")]
     public IActionResult Get([FromRoute] string name)
     {

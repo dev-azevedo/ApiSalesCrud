@@ -62,7 +62,7 @@ public class SaleController : ControllerBase
         }
     }
 
-
+    [AllowAnonymous]
     [HttpGet("{nameOrDescription}")]
     public IActionResult Get([FromRoute] string nameOrDescription)
     {
