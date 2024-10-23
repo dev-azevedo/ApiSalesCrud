@@ -1,0 +1,11 @@
+﻿version: '3.8'
+
+services:
+  webapp:
+    build: .
+    ports:
+      - "8080:80"
+    volumes:
+      - ./SalesCrud.db:/app/SalesCrud.db
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
