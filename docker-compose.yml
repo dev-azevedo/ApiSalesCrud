@@ -1,11 +1,10 @@
-﻿version: '3.8'
-
-services:
-  webapp:
+﻿services:
+  api:
     build: .
     ports:
-      - "8080:80"
+      - "7198:7198"
     volumes:
       - ./SalesCrud.db:/app/SalesCrud.db
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
+      - DOTNET_RUNNING_IN_CONTAINER=true
+      - DOTNET_USE_POLLING_FILE_WATCHER=true

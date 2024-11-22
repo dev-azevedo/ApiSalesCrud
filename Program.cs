@@ -164,28 +164,30 @@ builder.Services.PostConfigure<ApiBehaviorOptions>(options =>
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
+// if (app.Environment.IsDevelopment())
+// {
     app.UseDeveloperExceptionPage();
     app.UseSwagger();
     app.UseSwaggerUI(c =>
     {
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
     });
-}
-else
-{
-    app.UseExceptionHandler("/Home/Error");
-    app.UseHsts();
-}
+// }
+// else
+// {
+//     app.UseExceptionHandler("/Home/Error");
+//     app.UseHsts();
+// }
 
 app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
 
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.Urls.Add("http://*:7198");
 
 app.UseAuthentication();
 
