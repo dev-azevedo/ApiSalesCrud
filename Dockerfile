@@ -1,8 +1,8 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
-WORKDIR /src
+WORKDIR /app
 
 COPY SalesCrud.sln ./
-COPY SalesCrud/*.csproj ./SalesCrud/
+COPY SalesCrud.csproj ./
 
 
 RUN dotnet restore
@@ -10,8 +10,9 @@ RUN dotnet restore
 
 COPY . ./
 
-WORKDIR /src/SalesCrud
+
 RUN dotnet publish -c Release -o /app/publish
+
 
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
 WORKDIR /app
