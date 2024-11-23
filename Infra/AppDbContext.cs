@@ -11,6 +11,7 @@ public class AppDbContext : IdentityDbContext<IdentityUser, IdentityRole, string
     public DbSet<Sale> Sales { get; set; }
     public DbSet<Client> Clients { get; set; }
     public DbSet<Product> Products { get; set; }
+
     
     public AppDbContext(DbContextOptions<AppDbContext> options)
         : base(options) { }
@@ -45,6 +46,7 @@ public class AppDbContext : IdentityDbContext<IdentityUser, IdentityRole, string
             entity.Property(e => e.EditedOn).HasColumnType("TEXT");
 
             entity.HasIndex(e => e.Email).IsUnique();
+            entity.HasMany(c => c.Sales).WithOne(s => s.Client).HasForeignKey(c => c.Id);
         });
 
         modelBuilder.Entity<Product>(entity =>
@@ -61,6 +63,8 @@ public class AppDbContext : IdentityDbContext<IdentityUser, IdentityRole, string
                 .HasColumnType("TEXT")
                 .HasDefaultValueSql("CURRENT_TIMESTAMP");
             entity.Property(e => e.EditedOn).HasColumnType("TEXT").IsRequired(false);
+
+            entity.HasMany(p => p.Sales).WithOne(s => s.Product).HasForeignKey(p => p.Id);
         });
 
         modelBuilder.Entity<Sale>(entity =>
@@ -77,6 +81,7 @@ public class AppDbContext : IdentityDbContext<IdentityUser, IdentityRole, string
                 .Property(e => e.ClientId)
                 .HasColumnType("TEXT")
                 .HasConversion(v => v.ToString(), v => Guid.Parse(v));
+
             entity.Property(e => e.ValueSale).HasColumnType("TEXT");
             entity.Property(e => e.ProductQuantity).HasColumnType("INTEGER");
             entity
@@ -84,18 +89,10 @@ public class AppDbContext : IdentityDbContext<IdentityUser, IdentityRole, string
                 .HasColumnType("TEXT")
                 .HasDefaultValueSql("CURRENT_TIMESTAMP");
             entity.Property(e => e.EditedOn).HasColumnType("TEXT").IsRequired(false);
+
+            entity.HasOne(s => s.Client).WithMany(c => c.Sales).HasForeignKey(s => s.ClientId);
+            entity.HasOne(s => s.Product).WithMany(p => p.Sales).HasForeignKey(s => s.ProductId);
+            entity.HasOne(s => s.User).WithMany().HasForeignKey(s => s.UserId).OnDelete(DeleteBehavior.Restrict); ;
         });
-
-        modelBuilder
-            .Entity<Sale>()
-            .HasOne(s => s.Client)
-            .WithMany(c => c.Sales)
-            .HasForeignKey(s => s.ClientId);
-
-        modelBuilder
-            .Entity<Sale>()
-            .HasOne(s => s.Product)
-            .WithMany(p => p.Sales)
-            .HasForeignKey(s => s.ProductId);
     }
 }

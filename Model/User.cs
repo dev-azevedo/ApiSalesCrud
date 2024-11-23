@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace SalesCrud.Model
 {
     public class User

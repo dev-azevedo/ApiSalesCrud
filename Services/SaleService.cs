@@ -40,8 +40,6 @@ public class SaleService : ISaleService
         return _mapper.Map<List<SaleRespViewModel>>(sale);
     }
 
-  
-
     public SaleRespViewModel Created(SalePostViewModel saleViewModel)
     {
         var sale = _mapper.Map<Sale>(saleViewModel);

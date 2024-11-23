@@ -16,7 +16,6 @@ public class SaleController : ControllerBase
     {
         _saleService = saleService;
     }
-
     
     [AllowAnonymous]
     [HttpGet]
@@ -44,7 +43,6 @@ public class SaleController : ControllerBase
             return BadRequest(new ValidationResultModel(400, errors));
         }
     }
-
 
     [HttpGet("{id:guid}")]
     public IActionResult Get([FromRoute] Guid id)

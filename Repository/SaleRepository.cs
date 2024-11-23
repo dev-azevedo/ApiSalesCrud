@@ -20,6 +20,7 @@ public class SaleRepository : GenericRepository<Sale>, ISaleRepository
             .Take(pageSize)
             .Include(s => s.Product)
             .Include(s => s.Client)
+            .Include(s => s.User)
             .AsNoTracking()
             .ToListAsync();
 
@@ -31,6 +32,7 @@ public class SaleRepository : GenericRepository<Sale>, ISaleRepository
         return dataset
                    .Include(s => s.Product)
                    .Include(s => s.Client)
+                   .Include(s => s.User)
                    .AsNoTracking()
                    .SingleOrDefault(s => s.Id.Equals(id));
     }
@@ -41,6 +43,7 @@ public class SaleRepository : GenericRepository<Sale>, ISaleRepository
         return dataset
             .Include(s => s.Product)
             .Include(s => s.Client)
+            .Include(s => s.User)
             .AsNoTracking()
             .Where(s => s.Client.Name.ToLower().Contains(nameOrDescriptionLower) || s.Product.Description.ToLower().Contains(nameOrDescriptionLower))
             .ToList();

@@ -4,7 +4,7 @@
     ports:
       - "7198:7198"
     volumes:
-      - ./SalesCrud.db:/app/SalesCrud.db
+      - ./SalesCrud.db:/SalesCrud.db
     environment:
       - DOTNET_RUNNING_IN_CONTAINER=true
       - DOTNET_USE_POLLING_FILE_WATCHER=true

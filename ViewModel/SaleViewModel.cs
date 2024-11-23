@@ -15,6 +15,10 @@ public class SalePostViewModel
     [Required(ErrorMessage = "O campo quatidade de produto é obrigatório.")]
     [Range(0.01, double.MaxValue, ErrorMessage = "O campo quatidade de produto deve ser maior que zero.")]
     public int ProductQuantity { get; set; }
+    
+    [Required(ErrorMessage = "O campo usuário é obrigatório.")]
+    [RegularExpression("^((?!00000000-0000-0000-0000-000000000000).)*$", ErrorMessage = "O campo usuário é obrigatório.")]
+    public Guid UserId { get; set; }
 }
 
 public class SalePutViewModel
@@ -34,6 +38,10 @@ public class SalePutViewModel
     [Required(ErrorMessage = "O campo quatidade de produto é obrigatório.")]
     [Range(0.01, double.MaxValue, ErrorMessage = "O campo quatidade de produto deve ser maior que zero.")]
     public int ProductQuantity { get; set; }
+    
+    [Required(ErrorMessage = "O campo usuário é obrigatório.")]
+    [RegularExpression("^((?!00000000-0000-0000-0000-000000000000).)*$", ErrorMessage = "O campo usuário é obrigatório.")]
+    public Guid UserId { get; set; }
 }
 
 public class SaleRespViewModel
@@ -44,4 +52,5 @@ public class SaleRespViewModel
     public int ProductQuantity { get; set; }
     public decimal ValueSale { get; set; }
     public DateTime CreatedOn { get; set; }
+    public string UserName { get; set; }
 }

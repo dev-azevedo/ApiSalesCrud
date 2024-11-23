@@ -20,6 +20,7 @@ public class AutoMapperConfig : Profile
         CreateMap<Sale, SalePutViewModel>().ReverseMap();
         CreateMap<Sale, SaleRespViewModel>()
             .ForMember(dest => dest.Client, opt => opt.MapFrom(src => src.Client))
-            .ForMember(dest => dest.Product, opt => opt.MapFrom(src => src.Product));
+            .ForMember(dest => dest.Product, opt => opt.MapFrom(src => src.Product))
+            .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.User.UserName));
     }
 }
