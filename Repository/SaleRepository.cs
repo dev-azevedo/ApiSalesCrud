@@ -11,6 +11,11 @@ public class SaleRepository : GenericRepository<Sale>, ISaleRepository
     public SaleRepository(AppDbContext context) : base(context)
     { }
 
+    public async Task<int> Count()
+    {
+        return await dataset.CountAsync();
+    }
+
     public override async Task<(List<Sale>, int)> FindAll(int pageNumber, int pageSize)
     {
         var totalItems = await dataset.CountAsync();
@@ -38,7 +43,7 @@ public class SaleRepository : GenericRepository<Sale>, ISaleRepository
     }
 
     public List<Sale> FindAllByNameOrDescription(string nameOrDescription)
-    { 
+    {
         var nameOrDescriptionLower = nameOrDescription.ToLower();
         return dataset
             .Include(s => s.Product)
@@ -47,5 +52,20 @@ public class SaleRepository : GenericRepository<Sale>, ISaleRepository
             .AsNoTracking()
             .Where(s => s.Client.Name.ToLower().Contains(nameOrDescriptionLower) || s.Product.Description.ToLower().Contains(nameOrDescriptionLower))
             .ToList();
+    }
+
+    public async Task<int> ProductBestSeller()
+    {
+        var bestSeller = await dataset
+        .GroupBy(s => s.ProductId)
+        .Select(group => new
+        {
+            ProductId = group.Key,
+            TotalSales = group.Count()
+        })
+        .OrderByDescending(g => g.TotalSales)
+        .FirstOrDefaultAsync();
+
+        return bestSeller?.TotalSales ?? 0;
     }
 }

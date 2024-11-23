@@ -1,46 +1,46 @@
-﻿using SalesCrud.Exceptions;
-using SalesCrud.Services.Interfaces;
-using SalesCrud.ViewModel;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SalesCrud.Enums;
-using Microsoft.AspNetCore.Authorization;
+using SalesCrud.Exceptions;
+using SalesCrud.Services.Interfaces;
+using SalesCrud.ViewModel;
 
 namespace SalesCrud.Controllers;
+
 [Authorize]
 [Route("api/[controller]")]
 [ApiController]
-public class ProductController : ControllerBase
+public class ClientsController : ControllerBase
 {
-
-    private readonly IProductService _productService;
+    private readonly IClientService _clientService;
     private readonly IFileService _fileService;
 
-    public ProductController(IProductService productService, IFileService fileService)
+    public ClientsController(IClientService clientService, IFileService fileService)
     {
-        _productService = productService;
+        _clientService = clientService;
         _fileService = fileService;
     }
 
-
     [AllowAnonymous]
     [HttpGet]
-    public async Task<IActionResult> Get([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
+    public async Task<IActionResult> Get(
+        [FromQuery] int pageNumber = 1,
+        [FromQuery] int pageSize = 10
+    )
     {
         try
         {
-            var (products, totalItems) = await _productService.FindAll(pageNumber, pageSize);
-
+            var (clients, totalItems) = await _clientService.FindAll(pageNumber, pageSize);
             var response = new
             {
                 PageNumber = pageNumber,
                 PageSize = pageSize,
                 TotalItems = totalItems,
                 TotalPages = (int)Math.Ceiling(totalItems / (double)pageSize),
-                Items = products
+                Items = clients
             };
 
             return Ok(response);
-
         }
         catch (Exception ex)
         {
@@ -50,13 +50,12 @@ public class ProductController : ControllerBase
         }
     }
 
-
     [HttpGet("{id:guid}")]
     public IActionResult Get([FromRoute] Guid id)
     {
         try
         {
-            var product = _productService.FindById(id);
+            var product = _clientService.FindById(id);
             return Ok(product);
         }
         catch (Exception ex)
@@ -68,12 +67,12 @@ public class ProductController : ControllerBase
     }
 
     [AllowAnonymous]
-    [HttpGet("{description}")]
-    public IActionResult Get([FromRoute] string description)
+    [HttpGet("{name}")]
+    public IActionResult Get([FromRoute] string name)
     {
         try
         {
-            var product = _productService.FindAllByDescription(description);
+            var product = _clientService.FindAllByName(name);
             return Ok(product);
         }
         catch (Exception ex)
@@ -84,14 +83,39 @@ public class ProductController : ControllerBase
         }
     }
 
-  
-    [HttpPost]
-    public IActionResult Post([FromBody] ProductPostViewModel productViewModel)
+    [AllowAnonymous]
+    [HttpGet("bestSeller")]
+    public async Task<IActionResult> GetBestSeller()
     {
         try
         {
-            var product = _productService.Created(productViewModel);
-            return Created($"/product/{product.Id}", product);
+            var topThreeClients = await _clientService.FindBestSeller();
+            return Ok(
+                topThreeClients.Select(c => new { Client = c.Item1, SaleCount = c.Item2, }).ToList()
+            );
+        }
+        catch (Exception ex)
+        {
+            var errors = new List<ValidationError> { new(ex.Message) };
+
+            return BadRequest(new ValidationResultModel(400, errors));
+        }
+    }
+
+    [HttpPost]
+    public IActionResult Post([FromBody] ClientPostViewModel clientViewModel)
+    {
+        if (!ModelState.IsValid)
+        {
+            var errors = ModelState.Keys.SelectMany(key => ModelState[key].Errors.Select(x => new ValidationError(x.ErrorMessage))).ToList();
+
+            return BadRequest(new ValidationResultModel(400, errors));
+        }
+
+        try
+        {
+            var client = _clientService.Created(clientViewModel);
+            return Created($"/client/{client.Id}", client);
         }
         catch (DomainException ex)
         {
@@ -106,7 +130,6 @@ public class ProductController : ControllerBase
             return BadRequest(new ValidationResultModel(400, errors));
         }
     }
-
 
     [HttpPost("file")]
     public async Task<IActionResult> PostFile([FromForm] FilePostViewModel fileViewModel)
@@ -116,32 +139,42 @@ public class ProductController : ControllerBase
             return BadRequest("Invalid file");
         }
 
-        FileViewModel detail = await _fileService.SaveFile(fileViewModel.File, fileViewModel.Id, EDestinationFile.Product);
+        FileViewModel detail = await _fileService.SaveFile(
+            fileViewModel.File,
+            fileViewModel.Id,
+            EDestinationFile.Client
+        );
 
-        var product = _productService.FindById(fileViewModel.Id);
+        var client = _clientService.FindById(fileViewModel.Id);
 
-
-        ProductPutViewModel updateProduct = new()
+        ClientPutViewModel updateClient = new ClientPutViewModel
         {
             Id = fileViewModel.Id,
-            Description = product.Description,
-            UnitaryValue = product.UnitaryValue,
+            Name = client.Name,
+            Email = client.Email,
+            City = client.City,
             PathImage = detail.Url
         };
 
-        _productService.Updated(updateProduct);
+        Put(updateClient);
 
         return Ok(detail);
     }
 
-
     [HttpPut]
-    public IActionResult Put([FromBody] ProductPutViewModel productViewModel)
+    public IActionResult Put([FromBody] ClientPutViewModel clientViewModel)
     {
+        if (!ModelState.IsValid)
+        {
+            var errors = ModelState.Keys.SelectMany(key => ModelState[key].Errors.Select(x => new ValidationError(x.ErrorMessage))).ToList();
+
+            return BadRequest(new ValidationResultModel(400, errors));
+        }
+
         try
         {
-            _productService.Updated(productViewModel);
-            return Ok(productViewModel);
+            _clientService.Updated(clientViewModel);
+            return Ok(clientViewModel);
         }
         catch (DomainException ex)
         {
@@ -155,18 +188,14 @@ public class ProductController : ControllerBase
 
             return BadRequest(new ValidationResultModel(400, errors));
         }
-
     }
-    
 
     [HttpDelete("{id:guid}")]
-    [Authorize(Roles = "Manager")]
     public IActionResult Delete([FromRoute] Guid id)
     {
         try
         {
-            _fileService.DeleteFile(id, EDestinationFile.Product);
-            _productService.Delete(id);
+            _clientService.Delete(id);
             return NoContent();
         }
         catch (Exception ex)
@@ -176,27 +205,27 @@ public class ProductController : ControllerBase
             return BadRequest(new ValidationResultModel(400, errors));
         }
     }
-    
 
     [HttpDelete("file/{id:guid}")]
+    [Authorize(Roles = "Manager")]
     public IActionResult DeleteFile([FromRoute] Guid id)
     {
         try
         {
-            _fileService.DeleteFile(id, EDestinationFile.Product);
+            _fileService.DeleteFile(id, EDestinationFile.Client);
 
-            var product = _productService.FindById(id);
+            var client = _clientService.FindById(id);
 
-
-            ProductPutViewModel updateProduct = new ProductPutViewModel
+            ClientPutViewModel updateClient = new ClientPutViewModel
             {
                 Id = id,
-                Description = product.Description,
-                UnitaryValue = product.UnitaryValue,
+                Name = client.Name,
+                Email = client.Email,
+                City = client.City,
                 PathImage = null
             };
 
-            _productService.Updated(updateProduct);
+            _clientService.Updated(updateClient);
             return NoContent();
         }
         catch (Exception ex)

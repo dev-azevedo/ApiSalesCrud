@@ -1,46 +1,46 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using SalesCrud.Enums;
-using SalesCrud.Exceptions;
+﻿using SalesCrud.Exceptions;
 using SalesCrud.Services.Interfaces;
 using SalesCrud.ViewModel;
+using Microsoft.AspNetCore.Mvc;
+using SalesCrud.Enums;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SalesCrud.Controllers;
-
 [Authorize]
 [Route("api/[controller]")]
 [ApiController]
-public class ClientController : ControllerBase
+public class ProductsController : ControllerBase
 {
-    private readonly IClientService _clientService;
+
+    private readonly IProductService _productService;
     private readonly IFileService _fileService;
 
-    public ClientController(IClientService clientService, IFileService fileService)
+    public ProductsController(IProductService productService, IFileService fileService)
     {
-        _clientService = clientService;
+        _productService = productService;
         _fileService = fileService;
     }
 
+
     [AllowAnonymous]
     [HttpGet]
-    public async Task<IActionResult> Get(
-        [FromQuery] int pageNumber = 1,
-        [FromQuery] int pageSize = 10
-    )
+    public async Task<IActionResult> Get([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
     {
         try
         {
-            var (clients, totalItems) = await _clientService.FindAll(pageNumber, pageSize);
+            var (products, totalItems) = await _productService.FindAll(pageNumber, pageSize);
+
             var response = new
             {
                 PageNumber = pageNumber,
                 PageSize = pageSize,
                 TotalItems = totalItems,
                 TotalPages = (int)Math.Ceiling(totalItems / (double)pageSize),
-                Items = clients
+                Items = products
             };
 
             return Ok(response);
+
         }
         catch (Exception ex)
         {
@@ -49,13 +49,14 @@ public class ClientController : ControllerBase
             return BadRequest(new ValidationResultModel(400, errors));
         }
     }
+
 
     [HttpGet("{id:guid}")]
     public IActionResult Get([FromRoute] Guid id)
     {
         try
         {
-            var product = _clientService.FindById(id);
+            var product = _productService.FindById(id);
             return Ok(product);
         }
         catch (Exception ex)
@@ -67,12 +68,12 @@ public class ClientController : ControllerBase
     }
 
     [AllowAnonymous]
-    [HttpGet("{name}")]
-    public IActionResult Get([FromRoute] string name)
+    [HttpGet("{description}")]
+    public IActionResult Get([FromRoute] string description)
     {
         try
         {
-            var product = _clientService.FindAllByName(name);
+            var product = _productService.FindAllByDescription(description);
             return Ok(product);
         }
         catch (Exception ex)
@@ -83,39 +84,14 @@ public class ClientController : ControllerBase
         }
     }
 
-    [AllowAnonymous]
-    [HttpGet("bestSeller")]
-    public async Task<IActionResult> GetBestSeller()
-    {
-        try
-        {
-            var topThreeClients = await _clientService.FindBestSeller();
-            return Ok(
-                topThreeClients.Select(c => new { Client = c.Item1, SaleCount = c.Item2, }).ToList()
-            );
-        }
-        catch (Exception ex)
-        {
-            var errors = new List<ValidationError> { new(ex.Message) };
-
-            return BadRequest(new ValidationResultModel(400, errors));
-        }
-    }
-
+  
     [HttpPost]
-    public IActionResult Post([FromBody] ClientPostViewModel clientViewModel)
+    public IActionResult Post([FromBody] ProductPostViewModel productViewModel)
     {
-        if (!ModelState.IsValid)
-        {
-            var errors = ModelState.Keys.SelectMany(key => ModelState[key].Errors.Select(x => new ValidationError(x.ErrorMessage))).ToList();
-
-            return BadRequest(new ValidationResultModel(400, errors));
-        }
-
         try
         {
-            var client = _clientService.Created(clientViewModel);
-            return Created($"/client/{client.Id}", client);
+            var product = _productService.Created(productViewModel);
+            return Created($"/product/{product.Id}", product);
         }
         catch (DomainException ex)
         {
@@ -130,6 +106,7 @@ public class ClientController : ControllerBase
             return BadRequest(new ValidationResultModel(400, errors));
         }
     }
+
 
     [HttpPost("file")]
     public async Task<IActionResult> PostFile([FromForm] FilePostViewModel fileViewModel)
@@ -139,42 +116,32 @@ public class ClientController : ControllerBase
             return BadRequest("Invalid file");
         }
 
-        FileViewModel detail = await _fileService.SaveFile(
-            fileViewModel.File,
-            fileViewModel.Id,
-            EDestinationFile.Client
-        );
+        FileViewModel detail = await _fileService.SaveFile(fileViewModel.File, fileViewModel.Id, EDestinationFile.Product);
 
-        var client = _clientService.FindById(fileViewModel.Id);
+        var product = _productService.FindById(fileViewModel.Id);
 
-        ClientPutViewModel updateClient = new ClientPutViewModel
+
+        ProductPutViewModel updateProduct = new()
         {
             Id = fileViewModel.Id,
-            Name = client.Name,
-            Email = client.Email,
-            City = client.City,
+            Description = product.Description,
+            UnitaryValue = product.UnitaryValue,
             PathImage = detail.Url
         };
 
-        Put(updateClient);
+        _productService.Updated(updateProduct);
 
         return Ok(detail);
     }
 
+
     [HttpPut]
-    public IActionResult Put([FromBody] ClientPutViewModel clientViewModel)
+    public IActionResult Put([FromBody] ProductPutViewModel productViewModel)
     {
-        if (!ModelState.IsValid)
-        {
-            var errors = ModelState.Keys.SelectMany(key => ModelState[key].Errors.Select(x => new ValidationError(x.ErrorMessage))).ToList();
-
-            return BadRequest(new ValidationResultModel(400, errors));
-        }
-
         try
         {
-            _clientService.Updated(clientViewModel);
-            return Ok(clientViewModel);
+            _productService.Updated(productViewModel);
+            return Ok(productViewModel);
         }
         catch (DomainException ex)
         {
@@ -188,14 +155,18 @@ public class ClientController : ControllerBase
 
             return BadRequest(new ValidationResultModel(400, errors));
         }
+
     }
+    
 
     [HttpDelete("{id:guid}")]
+    [Authorize(Roles = "Manager")]
     public IActionResult Delete([FromRoute] Guid id)
     {
         try
         {
-            _clientService.Delete(id);
+            _fileService.DeleteFile(id, EDestinationFile.Product);
+            _productService.Delete(id);
             return NoContent();
         }
         catch (Exception ex)
@@ -205,27 +176,27 @@ public class ClientController : ControllerBase
             return BadRequest(new ValidationResultModel(400, errors));
         }
     }
+    
 
     [HttpDelete("file/{id:guid}")]
-    [Authorize(Roles = "Manager")]
     public IActionResult DeleteFile([FromRoute] Guid id)
     {
         try
         {
-            _fileService.DeleteFile(id, EDestinationFile.Client);
+            _fileService.DeleteFile(id, EDestinationFile.Product);
 
-            var client = _clientService.FindById(id);
+            var product = _productService.FindById(id);
 
-            ClientPutViewModel updateClient = new ClientPutViewModel
+
+            ProductPutViewModel updateProduct = new ProductPutViewModel
             {
                 Id = id,
-                Name = client.Name,
-                Email = client.Email,
-                City = client.City,
+                Description = product.Description,
+                UnitaryValue = product.UnitaryValue,
                 PathImage = null
             };
 
-            _clientService.Updated(updateClient);
+            _productService.Updated(updateProduct);
             return NoContent();
         }
         catch (Exception ex)

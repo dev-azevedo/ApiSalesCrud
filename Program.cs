@@ -16,6 +16,8 @@ using SalesCrud.Repository;
 using SalesCrud.Repository.Interfaces;
 using SalesCrud.Services;
 using SalesCrud.Services.Interfaces;
+using ApiSalesCrud.Services.Interfaces;
+using ApiSalesCrud.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -137,6 +139,7 @@ builder.Services.AddScoped<IClientService, ClientService>();
 builder.Services.AddScoped<ISaleService, SaleService>();
 builder.Services.AddScoped<IFileService, FileService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IDashboardService, DashBoardService>();
 
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 #endregion

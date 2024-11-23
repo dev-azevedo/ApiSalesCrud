@@ -12,6 +12,11 @@ public class ClientRepository : GenericRepository<Client>, IClientRepository
     public ClientRepository(AppDbContext context) : base(context)
     { }
 
+    public async Task<int> Count()
+    {
+        return await dataset.CountAsync();
+    }
+    
     public Client FindByEmail(string email)
     {
         return dataset.SingleOrDefault(p => p.Email == email);

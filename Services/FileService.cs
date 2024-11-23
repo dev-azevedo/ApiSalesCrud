@@ -71,7 +71,7 @@ public class FileService : IFileService
 
                 fileDetail.Name = fileName;
                 fileDetail.Type = fileType;
-                fileDetail.Url = $"{baseUrl}/api/file/{destinationFile.GetHashCode()}/{id}";
+                fileDetail.Url = $"{baseUrl}/api/files/{destinationFile.GetHashCode()}/{id}";
 
                 using var stream = new FileStream(destination, FileMode.Create);
                 await file.CopyToAsync(stream);
@@ -132,7 +132,7 @@ public class FileService : IFileService
             if (files.Length > 0)
             {
                 var baseUrl = $"{_context.HttpContext.Request.Scheme}://{_context.HttpContext.Request.Host}{_context.HttpContext.Request.PathBase}";
-                var filePath = $"{baseUrl}/api/file/{destinationFile.GetHashCode()}/{id}";
+                var filePath = $"{baseUrl}/api/files/{destinationFile.GetHashCode()}/{id}";
                 return filePath;
             }
 

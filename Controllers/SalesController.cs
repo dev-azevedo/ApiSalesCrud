@@ -8,11 +8,11 @@ namespace SalesCrud.Controllers;
 [Route("api/[controller]")]
 [ApiController]
 [Authorize]
-public class SaleController : ControllerBase
+public class SalesController : ControllerBase
 {
     private readonly ISaleService _saleService;
 
-    public SaleController(ISaleService saleService)
+    public SalesController(ISaleService saleService)
     {
         _saleService = saleService;
     }

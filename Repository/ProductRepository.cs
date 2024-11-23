@@ -1,4 +1,5 @@
-﻿using SalesCrud.Infra;
+﻿using Microsoft.EntityFrameworkCore;
+using SalesCrud.Infra;
 using SalesCrud.Model;
 using SalesCrud.Repository.Interfaces;
 
@@ -10,6 +11,11 @@ public class ProductRepository : GenericRepository<Product>, IProductRepository
     public ProductRepository(AppDbContext context) : base(context)
     { }
 
+    public async Task<int> Count()
+    {
+        return await dataset.CountAsync();
+    }
+    
     public Product FindByDescription(string description)
     {
         return dataset.SingleOrDefault(p => p.Description == description);
