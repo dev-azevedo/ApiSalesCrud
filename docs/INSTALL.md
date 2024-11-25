@@ -2,10 +2,10 @@
 
 Explore a documentação:
 
-1. [Introdução (README.md)](README.md)
-2. [Instalação](docs/INSTALL.md)
-3. [Guia de Uso](docs/USAGE.md)
-4. [API](docs/API.md)
+1. [Introdução (README.md)](../README.md)
+2. [Instalação](INSTALL.md)
+3. [Guia de Uso](USAGE.md)
+4. [API](API.md)
 
 
 #### Web Api .Net 8.
