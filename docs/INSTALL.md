@@ -8,8 +8,10 @@ Explore a documentação:
 4. [API](API.md)
 
 
+
+
 #### Web Api .Net 8.
-## 🛠 Built With
+## 🛠 Build With
 
 The main frameworks/libraries used in the project
 
@@ -17,7 +19,7 @@ The main frameworks/libraries used in the project
 
 - [EntityFrameworkCore](https://www-1.nuget.org/packages/Microsoft.EntityFrameworkCore.SqlServer/6.0.29)
 
-- [SqlServer](https://www.microsoft.com/pt-br/sql-server/sql-server-downloads)
+- [Sqlite](https://sqlitebrowser.org/)
 
 - [AutoMapper](https://automapper.org/)
 
@@ -28,7 +30,7 @@ The main frameworks/libraries used in the project
 
 To clone and run this application, you'll need [Git](https://git-scm.com/downloads) and [.Net SDK](https://dotnet.microsoft.com/pt-br/download/dotnet/8.0) installed on your computer. 
 From your command line:
-z
+
 ```bash
   git clone https://github.com/dev-azevedo/api-sales-crud.git
 ```
