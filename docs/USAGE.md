@@ -20,6 +20,10 @@ Explore a documentação:
 - O usuário deverá preencher os campos obrigatórios (descrição e preço)*;
 - O usuário precisar estar logado para acessar a página*;
 
+![image](./imgs/diagrama-cadastrar-produto.png)
+
+
+
 #### 2. Editar Produto
 - Esta opção esta disponível na tela de listagem de produtos;
 - O usuário deverá alterar o campo nome;
