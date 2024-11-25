@@ -9,12 +9,11 @@ Explore a documentação:
 
 
 ## 🔁 Guia de Uso
-###
-###
-###
+
 ## 📦 Produtos
 
 #### 1. Cadastrar Produto
+- Esta opção esta disponível na tela de listagem de produtos;
 - O usuário deverá preencher o campo nome;
 - O usuário deverá preencher o campo de preço;
 - O usuário poderá preencher o campo de imagem;
@@ -22,6 +21,7 @@ Explore a documentação:
 - O usuário precisar estar logado para acessar a página*;
 
 #### 2. Editar Produto
+- Esta opção esta disponível na tela de listagem de produtos;
 - O usuário deverá alterar o campo nome;
 - O usuário deverá alterar o campo de preço;
 - O usuário poderá alterar o campo de imagem;
@@ -29,6 +29,7 @@ Explore a documentação:
 - O usuário precisar estar logado para acessar a página*;
 
 #### 3. Deletar Produto
+- Esta opção esta disponível na tela de listagem de produtos;
 - O usuário precisar estar logado para acessar essa opção*;
 
 #### 4. Listar Produtos
@@ -40,6 +41,7 @@ Explore a documentação:
 ## 🤝 Clientes
 
 #### 1. Cadastrar Cliente
+- Esta opção esta disponível na tela de listagem de clientes;
 - O usuário deverá preencher o campo nome;
 - O usuário deverá preencher o campo email;
 - O usuário deverá preencher o campo cidade;
@@ -49,6 +51,7 @@ Explore a documentação:
 - Não é possivel cadastrar clientes com email já cadastrado;
 
 #### 2. Editar Cliente
+- Esta opção esta disponível na tela de listagem de clientes;
 - O usuário deverá alterar o campo nome;
 - O usuário deverá alterar o campo email;
 - O usuário deverá alterar o campo cidade;
@@ -58,6 +61,7 @@ Explore a documentação:
 - Não é possivel atualizar email já cadastrado;
 
 #### 3. Deletar Cliente
+- Esta opção esta disponível na tela de listagem de clientes;
 - O usuário precisar estar logado para acessar essa opção*;
 
 #### 4. Listar Clientes
@@ -69,6 +73,7 @@ Explore a documentação:
 ## 📈 Vendas
 
 #### 1. Cadastrar Venda
+- Esta opção esta disponível na tela de listagem de vendas;
 - O usuário deverá preencher o campo cliente;
 - O usuário deverá preencher o campo produto;
 - O usuário deverá preencher o campo quantidade;
@@ -76,6 +81,7 @@ Explore a documentação:
 - O usuário precisar estar logado para acessar a página*;
 
 #### 2. Editar Venda
+- Esta opção esta disponível na tela de listagem de vendas;
 - O usuário deverá alterar o campo cliente;
 - O usuário deverá alterar o campo produto;
 - O usuário deverá alterar o campo quantidade;
@@ -83,6 +89,7 @@ Explore a documentação:
 - O usuário precisar estar logado para acessar a página*;
 
 #### 3. Deletar Venda
+- Esta opção esta disponível na tela de listagem de vendas;
 - O usuário precisar estar logado para acessar essa opção*;
 
 #### 4. Listar Vendas
