@@ -2,7 +2,7 @@
 
 Bem-vindo à documentação do projeto! Use os links abaixo para navegar pelas diferentes seções:
 
-🏁 [Introdução (README.md)](../README.md)  | ⚙️ [Instalação](INSTALL.md) | 📓 [Guia de Uso](USAGE.md) | 🖥️ [API](API.md)
+🏁 [Introdução (README.md)](README.md)  | ⚙️ [Instalação](docs/INSTALL.md) | 📓 [Guia de Uso](docs/USAGE.md) | 🖥️ [API](docs/API.md)
 
 ## 🔋 Full Stack project
 
