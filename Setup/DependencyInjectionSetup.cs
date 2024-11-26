@@ -10,6 +10,7 @@ public static class DependencyInjectionSetup
     public static void AddDIConfig(this IServiceCollection services)
     {
         services.AddRepositories();
+        services.AddServices();
         services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         services.AddSingleton<IHostedService, RoleInitializer>();
         services.AddAutoMapper(typeof(AutoMapperConfig));
