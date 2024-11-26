@@ -12,6 +12,7 @@ Explore a documentação:
 ## 🖥️ API
 
 ### 🤝 Clientes
+<!-- GET clients -->
 <details>
 <summary>1. [GET]/api/Clients</summary>
 
@@ -53,57 +54,15 @@ curl -X GET "http://localhost:7198/api/Client?pageNumber=1&pageSize=10" -H "Acce
   ]
 }
 ```
-
 </details>
+<!-- End GET clients -->
 
+---
+
+<!-- GET client ID -->
 <details>
-  <summary>🤝 Clientes</summary>
+<summary>2. [GET]/api/Clients/{id}</summary>
 
----
-
-### 1. **[GET]/api/Clients**
-#### Descrição:
-Retorna a lista de recursos disponíveis.
-
-#### Parâmetros:
-- **Query Parameters (opcional):**
-  - `pageNumber` (integer): Número da página. Exemplo: `1`.
-  - `pageSize` (integer): Quantidade de itens por página. Exemplo: `10`.
-
-#### Exemplo de Requisição:
-```bash
-curl -X GET "http://localhost:7198/api/Client?pageNumber=1&pageSize=10" -H "Accept: application/json"
-```
-
-#### **Exemplo de Retorno[200]**:
-```json
-{
-  "pageNumber": 1,
-  "pageSize": 2,
-  "totalItems": 1005,
-  "totalPages": 503,
-  "items": [
-    {
-      "id": "guid-id",
-      "name": "name-client",
-      "email": "email-client",
-      "city": "city-client",
-      "pathImage": null
-    },
-    {
-      "id": "guid-id",
-      "name": "name-client",
-      "email": "email-client",
-      "city": "city-client",
-      "pathImage": null
-    },
-  ]
-}
-```
-
----
-
-### 2. **[GET]/api/Clients/{id}**
 #### Descrição:
 Retorna o cliente por id.
 
@@ -126,10 +85,15 @@ curl -X GET "http://localhost:7198/api/Clients/3fa85f64-5717-4562-b3fc-2c963f66a
   "pathImage": null
 }
 ```
+</details>
+<!-- End GET client ID -->
 
 ---
 
-### 3. **[GET]/api/Clients/{name}**
+<!-- Get client by name -->
+<details>
+<summary>3. [GET]/api/Clients/{name}</summary>
+
 #### Descrição:
 Retorna o cliente por nome. Busca cliente com nome relacionado ao parâmetro.
 
@@ -154,10 +118,14 @@ curl -X GET "http://localhost:7198/api/Clients/Jose" -H "Accept: application/jso
     }
 ]
 ```
-
+</details>
+<!-- End Get client by name -->
 ---
 
-### 4. **[Post]/api/Clients**
+<!-- Post client -->
+<details>
+<summary>4. [Post]/api/Clients</summary>
+
 #### Descrição:
 Cadastro de novo cliente.
 
@@ -191,10 +159,14 @@ curl -X POST "http://localhost:7198/api/Clients" -H "Accept: application/json"
 "pathImage": null
 }
 ```
-
+</details>
+<!-- End Post client -->
 ---
 
-### 5. **[Put]/api/Clients**
+<!-- Put client -->
+<details>
+<summary>5. [Put]/api/Clients</summary>
+
 #### Descrição:
 Atualizar dados do cliente.
 
@@ -232,10 +204,14 @@ curl -X PUT "http://localhost:7198/api/Clients" -H "Accept: application/json"
 "pathImage": null
 }
 ```
-
+</details>
+<!-- End Put client -->
 ---
 
-### 6. **[Delete]/api/Clients/{id}**
+<!-- Delete client -->
+<details>
+<summary>6. [Delete]/api/Clients/{id}</summary>
+
 #### Descrição:
 Deletar cliente.
 
@@ -250,9 +226,14 @@ curl -X DELETE "http://localhost:7198/api/Clients/3fa85f64-5717-4562-b3fc-2c963f
 
 #### **Retorno[204]**
 
+</details>
+<!-- End Delete client -->
 ---
 
-### 7. **[POST]/api/Clients/file**
+<!-- Post client file -->
+<details>
+<summary>7. [POST]/api/Clients/file</summary>
+
 #### Descrição:
 Adicionar imagem ao cliente.
 
@@ -274,10 +255,14 @@ curl -X POST "http://localhost:7198/api/Clients/" -H "Content-Type: multipart/fo
   "url": "http://localhost:7198/api/files/2/3fa85f64-5717-4562-b3fc-2c963f66afa6"
 }
 ```
-
+</details>
+<!-- End Post client file -->
 ---
 
-### 8. **[DELETE]/api/Clients/file**
+<!-- Post client file -->
+<details>
+<summary>8. [DELETE]/api/Clients/file</summary>
+
 #### Descrição:
 Deletar imagem do cliente.
 
@@ -291,7 +276,5 @@ curl -X DELETE "http://localhost:7198/api/Clients/7cf63a1b-4317-4df1-b401-265f0b
 ```
 
 #### **Retorno[204]**
-
----
-
 </details>
+<!-- End Post client file -->
