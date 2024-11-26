@@ -8,7 +8,7 @@ Explore a documentação:
 ## Bem-vindo à documentação detalhada da API. Aqui você encontrará informações sobre os endpoints disponíveis, seus parâmetros, respostas e exemplos de uso.
 #### Caso tenha alguma dúvida sobre o funcionamento do projeto, acesse o [Guia de Uso](USAGE.md) para mais informações.
 
----
+
 ## 🖥️ API
 
 ### 🤝 Clientes
@@ -57,8 +57,6 @@ curl -X GET "http://localhost:7198/api/Client?pageNumber=1&pageSize=10" -H "Acce
 </details>
 <!-- End GET clients -->
 
----
-
 <!-- GET client ID -->
 <details>
 <summary>2. [GET]/api/Clients/{id}</summary>
@@ -88,7 +86,7 @@ curl -X GET "http://localhost:7198/api/Clients/3fa85f64-5717-4562-b3fc-2c963f66a
 </details>
 <!-- End GET client ID -->
 
----
+
 
 <!-- Get client by name -->
 <details>
@@ -120,7 +118,6 @@ curl -X GET "http://localhost:7198/api/Clients/Jose" -H "Accept: application/jso
 ```
 </details>
 <!-- End Get client by name -->
----
 
 <!-- Post client -->
 <details>
@@ -161,7 +158,7 @@ curl -X POST "http://localhost:7198/api/Clients" -H "Accept: application/json"
 ```
 </details>
 <!-- End Post client -->
----
+
 
 <!-- Put client -->
 <details>
@@ -206,7 +203,7 @@ curl -X PUT "http://localhost:7198/api/Clients" -H "Accept: application/json"
 ```
 </details>
 <!-- End Put client -->
----
+
 
 <!-- Delete client -->
 <details>
@@ -228,7 +225,7 @@ curl -X DELETE "http://localhost:7198/api/Clients/3fa85f64-5717-4562-b3fc-2c963f
 
 </details>
 <!-- End Delete client -->
----
+
 
 <!-- Post client file -->
 <details>
@@ -257,7 +254,7 @@ curl -X POST "http://localhost:7198/api/Clients/" -H "Content-Type: multipart/fo
 ```
 </details>
 <!-- End Post client file -->
----
+
 
 <!-- Post client file -->
 <details>
