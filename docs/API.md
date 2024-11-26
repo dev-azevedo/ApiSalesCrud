@@ -9,6 +9,7 @@ Explore a documentação:
 
 
 ## Bem-vindo à documentação detalhada da API. Aqui você encontrará informações sobre os endpoints disponíveis, seus parâmetros, respostas e exemplos de uso.
+#### Caso tenha alguma dúvida sobre o funcionamento do projeto, acesse o [Guia de Uso](USAGE.md) para mais informações.
 
 ---
 ## 📂 Endpoints
