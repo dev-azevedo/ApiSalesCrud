@@ -11,8 +11,55 @@ Explore a documentação:
 ---
 ## 🖥️ API
 
+### 🤝 Clientes
 <details>
-  <summary>### 🤝 Clientes</summary>
+<summary>1. [GET]/api/Clients</summary>
+
+### Descrição:
+Retorna a lista de recursos disponíveis.
+
+#### Parâmetros:
+- **Query Parameters (opcional):**
+  - `pageNumber` (integer): Número da página. Exemplo: `1`.
+  - `pageSize` (integer): Quantidade de itens por página. Exemplo: `10`.
+
+#### Exemplo de Requisição:
+```bash
+curl -X GET "http://localhost:7198/api/Client?pageNumber=1&pageSize=10" -H "Accept: application/json"
+```
+
+#### **Exemplo de Retorno[200]**:
+```json
+{
+  "pageNumber": 1,
+  "pageSize": 2,
+  "totalItems": 1005,
+  "totalPages": 503,
+  "items": [
+    {
+      "id": "guid-id",
+      "name": "name-client",
+      "email": "email-client",
+      "city": "city-client",
+      "pathImage": null
+    },
+    {
+      "id": "guid-id",
+      "name": "name-client",
+      "email": "email-client",
+      "city": "city-client",
+      "pathImage": null
+    },
+  ]
+}
+```
+
+</details>
+
+<details>
+  <summary>🤝 Clientes</summary>
+
+---
 
 ### 1. **[GET]/api/Clients**
 #### Descrição:
