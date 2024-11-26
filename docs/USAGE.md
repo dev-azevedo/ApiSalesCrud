@@ -2,14 +2,10 @@
 
 Explore a documentação:
 
-1. [Introdução (README.md)](../README.md)
-2. [Instalação](INSTALL.md)
-3. [Guia de Uso](USAGE.md)
-4. [API](API.md)
+🏁 [Introdução (README.md)](../README.md)  | ⚙️ [Instalação](INSTALL.md) | 📓 [Guia de Uso](USAGE.md) | 🖥️ [API](API.md)
 
-
-## 🔁 Guia de Uso
-
+## 📓 Guia de Uso
+---
 ## 📦 Produtos
 
 #### 1. Cadastrar Produto
@@ -21,7 +17,6 @@ Explore a documentação:
 - O usuário precisar estar logado para acessar a página*;
 
 ![image](./imgs/diagrama-cadastrar-produto.png)
-
 
 
 #### 2. Editar Produto

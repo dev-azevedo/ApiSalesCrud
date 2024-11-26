@@ -2,22 +2,17 @@
 
 Explore a documentação:
 
-1. [Introdução (README.md)](../README.md)
-2. [Instalação](INSTALL.md)
-3. [Guia de Uso](USAGE.md)
-4. [API](API.md)
+🏁 [Introdução (README.md)](../README.md)  | ⚙️ [Instalação](INSTALL.md) | 📓 [Guia de Uso](USAGE.md) | 🖥️ [API](API.md)
 
+## Nesta seção, você encontrará todas as informações necessárias para configurar e rodar o projeto em seu ambiente local.
 
+---
 
-
-#### Web Api .Net 8.
-## 🛠 Build With
-
-The main frameworks/libraries used in the project
+## 🔍 O que usei para desenvolver este projeto?
 
 - [.Net 8](https://dotnet.microsoft.com/pt-br/download/dotnet/8.0)
 
-- [EntityFrameworkCore](https://www-1.nuget.org/packages/Microsoft.EntityFrameworkCore.SqlServer/6.0.29)
+- [EntityFrameworkCore](https://www-1.nuget.org/packages/Microsoft.EntityFrameworkCore.SqlServer/8.0.0)
 
 - [Sqlite](https://sqlitebrowser.org/)
 
@@ -26,28 +21,28 @@ The main frameworks/libraries used in the project
 - [JWT](https://jwt.io/)
 
 
-## ⚙ How To Use
 
-To clone and run this application, you'll need [Git](https://git-scm.com/downloads) and [.Net SDK](https://dotnet.microsoft.com/pt-br/download/dotnet/8.0) installed on your computer. 
-From your command line:
+## ⚙ Clone o repositório
+Para clonar e rodar este projeto, você precisará instalar [Git](https://git-scm.com/downloads) e [.Net SDK](https://dotnet.microsoft.com/pt-br/download/dotnet/8.0) no seu computador.
+Após execute os seguintes comando no terminal:
 
 ```bash
   git clone https://github.com/dev-azevedo/api-sales-crud.git
 ```
 
-Go to the project directory
+Acesso o projeto
 
 ```bash
   cd api-sales-crud
 ```
 
-Update database
+Atualize seu banco de dados com as migrations
 
 ```bash
 dotnet ef database update
 ```
 
-Run the application
+Rodando a aplicação
 
 ```bash
 dotnet run
