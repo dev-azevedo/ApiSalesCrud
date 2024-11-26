@@ -1,4 +1,4 @@
-﻿# Documentação do Projeto
+﻿# 📚 Documentação da API
 
 Bem-vindo à documentação do projeto! Use os links abaixo para navegar pelas diferentes seções:
 
