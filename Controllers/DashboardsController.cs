@@ -1,7 +1,7 @@
-using ApiSalesCrud.Services.Interfaces;
+using SalesCrud.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ApiSalesCrud.Controllers
+namespace SalesCrud.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]

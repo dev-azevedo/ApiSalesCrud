@@ -1,4 +1,4 @@
-namespace ApiSalesCrud.ViewModel;
+namespace SalesCrud.ViewModel;
 
 public class DashboardViewModel
 {

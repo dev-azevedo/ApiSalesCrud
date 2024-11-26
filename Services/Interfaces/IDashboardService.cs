@@ -1,6 +1,6 @@
-using ApiSalesCrud.ViewModel;
+using SalesCrud.ViewModel;
 
-namespace ApiSalesCrud.Services.Interfaces;
+namespace SalesCrud.Services.Interfaces;
 
 public interface IDashboardService
 {

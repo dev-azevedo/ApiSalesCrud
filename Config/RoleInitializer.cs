@@ -1,7 +1,7 @@
 using SalesCrud.Enums;
 using Microsoft.AspNetCore.Identity;
 
-namespace SalesCrud.Configurations;
+namespace SalesCrud.Config;
 
 public class RoleInitializer : IHostedService
 {

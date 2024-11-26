@@ -2,7 +2,7 @@
 using SalesCrud.Model;
 using SalesCrud.ViewModel;
 
-namespace SalesCrud.AutoMapper;
+namespace SalesCrud.Config;
 
 public class AutoMapperConfig : Profile
 {

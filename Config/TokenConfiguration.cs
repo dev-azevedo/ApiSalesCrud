@@ -1,4 +1,4 @@
-namespace SalesCrud.Configurations;
+namespace SalesCrud.Config;
 
 public class TokenConfiguration
 {

@@ -1,8 +1,8 @@
-using ApiSalesCrud.Services.Interfaces;
-using ApiSalesCrud.ViewModel;
+using SalesCrud.Services.Interfaces;
+using SalesCrud.ViewModel;
 using SalesCrud.Repository.Interfaces;
 
-namespace ApiSalesCrud.Services;
+namespace SalesCrud.Services;
 
 public class DashBoardService : IDashboardService
 {

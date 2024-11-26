@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using SalesCrud.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace SalesCrud.ViewModel;
 
@@ -51,6 +52,7 @@ public class SaleRespViewModel
     public ProductRespViewModel Product { get; set; }
     public int ProductQuantity { get; set; }
     public decimal ValueSale { get; set; }
-    public DateTime CreatedOn { get; set; }
     public string UserName { get; set; }
+    public ESaleStatus Status { get; set; }
+    public DateTime CreatedOn { get; set; }
 }
