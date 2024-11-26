@@ -1,10 +1,10 @@
-# 📚 Documentação da API
+# 📚 Documentação da API - ⚙️ Instalação
 
 Explore a documentação:
 
 🏁 [Introdução (README.md)](../README.md)  | ⚙️ [Instalação](INSTALL.md) | 📓 [Guia de Uso](USAGE.md) | 🖥️ [API](API.md)
 
-## Nesta seção, você encontrará todas as informações necessárias para configurar e rodar o projeto em seu ambiente local.
+### Nesta seção, você encontrará todas as informações necessárias para configurar e rodar o projeto em seu ambiente local.
 
 ---
 

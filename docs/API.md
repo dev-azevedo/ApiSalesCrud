@@ -1,15 +1,14 @@
-# 📚 Documentação da API
+# 📚 Documentação da API - 🖥️ API
 
 Explore a documentação:
 
 🏁 [Introdução (README.md)](../README.md)  | ⚙️ [Instalação](INSTALL.md) | 📓 [Guia de Uso](USAGE.md) | 🖥️ [API](API.md)
 
 
-## Bem-vindo à documentação detalhada da API. Aqui você encontrará informações sobre os endpoints disponíveis, seus parâmetros, respostas e exemplos de uso.
+### Nesta seção, você encontrará informações sobre os endpoints disponíveis, seus parâmetros, respostas e exemplos de uso.
 #### Caso tenha alguma dúvida sobre o funcionamento do projeto, acesse o [Guia de Uso](USAGE.md) para mais informações.
 
-
-## 🖥️ API
+---
 
 ### 🤝 Clientes
 <!-- GET clients -->

@@ -1,11 +1,13 @@
-# 📚 Documentação da API
+# 📚 Documentação da API - 📓 Guia de Uso
 
 Explore a documentação:
 
 🏁 [Introdução (README.md)](../README.md)  | ⚙️ [Instalação](INSTALL.md) | 📓 [Guia de Uso](USAGE.md) | 🖥️ [API](API.md)
 
-## 📓 Guia de Uso
+### Nesta seção, você encontrará todas as informações necessárias sobre como funciona o fluxo das funcionalidades do projeto.
+
 ---
+
 ## 📦 Produtos
 
 #### 1. Cadastrar Produto
